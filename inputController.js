@@ -13,36 +13,41 @@ $(document).on("keydown", keyDown);
 $(document).on("keyup", keyUp);
 
 var phone;
-phone = document.getElementById("phoneScreen");
+phone = $("phoneScreen");
 
 var debug = false;
-document.getElementById("log").style.display = "none";
+$("#log").hide(); //.css("display", "none");
 
 $('.gameButton').click(function(){doClick($(this).attr('id'));});
 
 function invClick(){
     log("invClick()");
-    loadHTML("inventory");
+    //loadHTML("inventory");
+    checkInventory();
 }
 
 function mapClick(){
     log("mapClick()");
-    loadHTML("maps");
+    //loadHTML("maps");
+    checkMap();
 }
 
 function statsClick(){
     log("statsClick()");
-    loadHTML("stats");
+    //loadHTML("stats");
+    checkStats();
 }
 
 function socialClick(){
     log("socialClick()");
-    loadHTML("social");
+    //loadHTML("social");
+    checkSocial();
 }
 
 function aboutClick(){
     log("aboutClick()");
-    loadHTML("about");
+    //loadHTML("about");
+    checkAbout();
 }
 
 function log(message){
@@ -143,6 +148,7 @@ function keyDown(e){
     switch(e.keyCode){
         case 49://1
             log("1 down");
+            checkStats();
             break;
         case 50://2
             log("2 down");
@@ -164,6 +170,7 @@ function keyDown(e){
             break;
         case 69://e
             log("E down");
+            move("up");
             break;
         case 82://r
             log("R down");
@@ -176,12 +183,14 @@ function keyDown(e){
             break;
         case 83://s
             log("S down");
+            move("left");
             break;
         case 68://d
             log("D down");
             break;
         case 70://f
             log("F down");
+            move("right");
             break;
         case 71://g
             log("G down");
@@ -194,6 +203,7 @@ function keyDown(e){
             break;
         case 67://c
             log("C down");
+            move("down");
             break;
         case 86://v
             log("V down");
@@ -302,11 +312,11 @@ function keyUp(e){
             log("H up");
             if(debug){
                 log("Debug mode disabled");
-                document.getElementById("log").style.display = "none";
+                $("#log").hide();
                 debug = false;
             }else{
                 log("Debug mode enabled");
-                document.getElementById("log").style.display = "block";
+                $("#log").show();
                 debug = true;                
             }
             break;
