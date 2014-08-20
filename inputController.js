@@ -12,6 +12,9 @@
 $(document).on("keydown", keyDown);
 $(document).on("keyup", keyUp);
 
+var critString = [];
+var flavString = [];
+
 var phone;
 phone = $("phoneScreen");
 
@@ -20,34 +23,41 @@ $("#log").hide(); //.css("display", "none");
 
 $('.gameButton').click(function(){doClick($(this).attr('id'));});
 
+$("#buttonE").html("E"+"<br>"+"Up");
+$("#buttonS").html("S"+"<br>"+"Left");
+$("#buttonF").html("F"+"<br>"+"Right");
+$("#buttonC").html("C"+"<br>"+"Down");
+
 function invClick(){
     log("invClick()");
     //loadHTML("inventory");
-    checkInventory();
-}
-
-function mapClick(){
-    log("mapClick()");
-    //loadHTML("maps");
-    checkMap();
+    phoneClick("inventory");
 }
 
 function statsClick(){
     log("statsClick()");
     //loadHTML("stats");
-    checkStats();
+    phoneClick("stats");
+}
+
+function mapClick(){
+    log("mapClick()");
+    //loadHTML("maps"); 
+    phoneClick("map");
 }
 
 function socialClick(){
     log("socialClick()");
     //loadHTML("social");
-    checkSocial();
+    //updatePhone();
+    phoneClick("social");
 }
 
 function aboutClick(){
     log("aboutClick()");
     //loadHTML("about");
-    checkAbout();
+    //updatePhone();
+    phoneClick("about");
 }
 
 function log(message){
@@ -69,7 +79,7 @@ function log(message){
                 + seconds + ":"
                 + millis;
     
-    document.getElementById("log").innerHTML = timestamp + ": " + message + "<br>" + document.getElementById("log").innerHTML;
+    $("#log").html(timestamp + ": " + message + "<br>" + $("#log").html());
 }
 
 function getTime(variable){
@@ -85,16 +95,16 @@ function getTime(variable){
     return tempVar;
 }
 
-function loadHTML(filename){
-    var xhr= new XMLHttpRequest();
-    xhr.open('GET', filename+'.html', true);
-    xhr.onreadystatechange= function() {
-    if (this.readyState!==4) return;
-    if (this.status!==200) return; // or whatever error handling you want
-    phone.innerHTML= this.responseText;
-    };
-    xhr.send();
-}
+//function loadHTML(filename){
+//    var xhr= new XMLHttpRequest();
+//    xhr.open('GET', filename+'.html', true);
+//    xhr.onreadystatechange= function() {
+//    if (this.readyState!==4) return;
+//    if (this.status!==200) return; // or whatever error handling you want
+//    phone.innerHTML= this.responseText;
+//    };
+//    xhr.send();
+//}
 
 function doClick(id){
     //var element = document.getElementById("button1");
@@ -110,7 +120,7 @@ function doClick(id){
     //document.dispatchEvent(keyEvent);
     //$(document).keydown(character);
     
-    var press = jQuery.Event("keydown");
+    var press = jQuery.Event("keyup");
     
     if(character === "TAB"){
         press.which = 9;
@@ -147,169 +157,194 @@ function keyDown(e){
     //log("e.key(): " + e.key);
     switch(e.keyCode){
         case 49://1
-            log("1 down");
-            checkStats();
+//            log("1 down");
+            //checkStats();
             break;
         case 50://2
-            log("2 down");
+//            log("2 down");
             break;
         case 51://3
-            log("3 down");
+//            log("3 down");
             break;
         case 52://4
-            log("4 down");
+//            log("4 down");
             break;
         case 53://5
-            log("5 down");
+//            log("5 down");
             break;
         case 81://q
-            log("Q down");
+//            log("Q down");
             break;
         case 87://w
-            log("W down");
+//            log("W down");
             break;
         case 69://e
-            log("E down");
-            move("up");
+//            log("E down");
             break;
         case 82://r
-            log("R down");
+//            log("R down");
             break;
         case 84://t
-            log("T down");
+//            log("T down");
             break;
         case 65://a
-            log("A down");
+//            log("A down");
             break;
         case 83://s
-            log("S down");
-            move("left");
+//            log("S down");
             break;
         case 68://d
-            log("D down");
+//            log("D down");
             break;
         case 70://f
-            log("F down");
-            move("right");
+//            log("F down");
             break;
         case 71://g
-            log("G down");
+//            log("G down");
             break;
         case 90://z
-            log("Z down");
+//            log("Z down");
             break;
         case 88://x
-            log("X down");
+//            log("X down");
             break;
         case 67://c
-            log("C down");
-            move("down");
+//            log("C down");
             break;
         case 86://v
-            log("V down");
+//            log("V down");
             break;
         case 66://b
-            log("B down");
+//            log("B down");
             break;
         case 9://tab
-            log("TAB down");
+//            log("TAB down");
             break;
         case 16://shift
-            log("SHIFT down");
+//            log("SHIFT down");
             break;
         case 17://ctrl
-            log("CTRL down");
+//            log("CTRL down");
             break;
         case 18://alt
-            log("ALT down");
+//            log("ALT down");
             break;
         case 32://space
-            log("SPACE down");
+//            log("SPACE down");
             break;
     }
 }
 
 function keyUp(e){
-    e.preventDefault();
+    //e.preventDefault();
     switch(e.keyCode){
         case 49://1
-            log("1 up");
+//            log("1 up");
+            questionPlayerActions();
             break;
         case 50://2
-            log("2 up");
+//            log("2 up");
+            questionPlayerActions();
             break;
         case 51://3
-            log("3 up");
+//            log("3 up");
+            questionPlayerActions();
             break;
         case 52://4
-            log("4 up");
+//            log("4 up");
+            questionPlayerActions();
             break;
         case 53://5
-            log("5 up");
+//            log("5 up");
+            questionPlayerActions();
             break;
         case 81://q
-            log("Q up");
+//            log("Q up");
+            questionPlayerActions();
             break;
         case 87://w
-            log("W up");
+//            log("W up");
+            questionPlayerActions();
             break;
         case 69://e
-            log("E up");
+//            log("E up");
+            move("up");
             break;
         case 82://r
-            log("R up");
+//            log("R up");
+            questionPlayerActions();
             break;
         case 84://t
-            log("T up");
+//            log("T up");
+            questionPlayerActions();
             break;
         case 65://a
-            log("A up");
+//            log("A up");
+            questionPlayerActions();
             break;
         case 83://s
-            log("S up");
+//            log("S up");
+            move("left");
             break;
         case 68://d
-            log("D up");
+//            log("D up");
+            if(player.isBattleReady() && enemy.getHealth() !== 0){
+                player.attack(enemy);
+            }else{
+                questionPlayerActions();
+            }
             break;
         case 70://f
-            log("F up");
+//            log("F up");
+            move("right");
             break;
         case 71://g
-            log("G up");
+//            log("G up");
+            questionPlayerActions();
             break;
         case 90://z
-            log("Z up");
+//            log("Z up");
+            questionPlayerActions();
             break;
         case 88://x
-            log("X up");
+//            log("X up");
+            questionPlayerActions();
             break;
         case 67://c
-            log("C up");
+//            log("C up");
+            move("down");
             break;
         case 86://v
-            log("V up");
+//            log("V up");
+            questionPlayerActions();
             break;
         case 66://b
-            log("B up");
+//            log("B up");
+            questionPlayerActions();
             break;
         case 9://tab
-            log("TAB up");
+//            log("TAB up");
+            questionPlayerActions();
             break;
         case 16://shift
-            log("SHIFT up");
+//            log("SHIFT up");
+            questionPlayerActions();
             break;
         case 17://ctrl
-            log("CTRL up");
+//            log("CTRL up");
+            questionPlayerActions();
             break;
         case 18://alt
-            log("ALT up");
+//            log("ALT up");
+            questionPlayerActions();
             break;
         case 32://space
-            log("SPACE up");
+//            log("SPACE up");
+            questionPlayerActions();
             break;
             
         case 72://h
-            log("H up");
+//            log("H up");
             if(debug){
                 log("Debug mode disabled");
                 $("#log").hide();
@@ -321,6 +356,7 @@ function keyUp(e){
             }
             break;
     }
+    tick();
 }
 
 

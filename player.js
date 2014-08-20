@@ -5,58 +5,57 @@
 
 function Player(){
     
-    var health = 10;
-    var maxHealth = health;
-    var name = "Not Burrito";
-    var pow = 5;
-    var dex = 3;
-    var wis = 4;
-    var items = [];
-    var specials = [];
-    var activeItem, activeSpecial;
-    var stockSpecials = [];
-    var availableSpecials = [];
-    var dead;
-    var model;
-    var level = 1;
-    var experience = 0;
-    var levelCap = 2;
-    var statPoints = 10;
-    var posX = 0;
-    var posY = 0;
+    this.health = 10;
+    this.maxHealth = this.health;
+    this.name = "Not Burrito";
+    this.pow = 5;
+    this.dex = 3;
+    this.wis = 4;
+    this.items = [];
+    this.specials = [];
+    this.activeItem, this.activeSpecial;
+    this.stockSpecials = [];
+    this.availableSpecials = [];
+    this.dead;
+    this.model;
+    this.level = 1;
+    this.experience = 0;
+    this.levelCap = 2;
+    this.statPoints = 10;
+    
+    this.posX = 0;
+    this.posY = 0;
+    this.battleReady = false;
+    this.tick = 0;
     
     /*
      * Method to set up any variables properly, sets up name from input right now
      */
-    Player.prototype.start = function(playerName){
-        name = playerName;        
-        fillAvailSpec();
-        this.ranStats();
-    };
+    
     
     //Safeguard to prevent endless loops
-    var ticker = 5;
+    this.ticker = 5;
     /*
      * Method to give random stats
      */
     Player.prototype.ranStats = function(){
         //check if the ticker has reached 0 and give any remaining points to health
-        if(ticker === 0){
-            maxHealth += statPoints * 10;
-            statPoints = 0;
+        if(this.ticker === 0){
+            this.maxHealth += this.statPoints * 10;
+            this.statPoints = 0;
             log("Ticker at 0");
         }
         //a temporary variable to deal with the fact that health has to be higher than 1 per point
         var tempNo;
-        tempNo = Math.floor(Math.random()*statPoints);
-        maxHealth += Math.floor(tempNo*10);
-        health = maxHealth;
-        statPoints = statPoints - tempNo;
+        tempNo = Math.floor(Math.random()*this.statPoints);
+        this.maxHealth += Math.floor(tempNo*10);
+        this.health = this.maxHealth;
+        this.statPoints = this.statPoints - tempNo;
         
         //following the same convention as above
-        tempNo = Math.floor(Math.random()*statPoints);
-        pow += Math.floor(tempNo);
-        statPoints = statPoints - tempNo;
+        tempNo = Math.floor(Math.random()*this.statPoints);
+        this.pow += Math.floor(tempNo);
+        this.statPoints = this.statPoints - tempNo;
         
         //this is for variables that are not being used currently
         //
@@ -70,21 +69,21 @@ function Player(){
         //health = maxHealth;
         
         //checks to see if the ticker and stat points have not run out
-        if(statPoints > 0 && ticker>0){
+        if(this.statPoints > 0 && this.ticker>0){
             //decrement the ticker
-            ticker--;
+            this.ticker--;
             //do this again
             this.ranStats();
         }else{
             //print final stats
             log("------Player Final Stats------");
-            log("Level: " + level);
-            log("Max Health: " + maxHealth);
-            log("Power: " + pow);
-            log("Dexterity: " + dex);
-            log("Wisdom: " + wis);
-            log("Max points: " + level*10);
-            log("Remaining points: " + statPoints);
+            log("Level: " + this.level);
+            log("Max Health: " + this.maxHealth);
+            log("Power: " + this.pow);
+            log("Dexterity: " + this.dex);
+            log("Wisdom: " + this.wis);
+            log("Max points: " + this.level*10);
+            log("Remaining points: " + this.statPoints);
             log("------End Player Stats------");
         }
     };
@@ -104,7 +103,7 @@ function Player(){
      * Method to force the exp to a certain value
      */
     Player.prototype.setExp = function(newExp){
-        experience = newExp;
+        this.experience = newExp;
         //check for a level up
         checkLevelUp();
     };
@@ -115,7 +114,7 @@ function Player(){
      * @return experience
      */
     Player.prototype.getExp = function(){
-        return experience;
+        return this.experience;
     };
     
     /*
@@ -124,7 +123,7 @@ function Player(){
      * @return gap
      */
     Player.prototype.getExpToNextLevel = function(){
-        var gap = levelCap - experience;
+        var gap = this.levelCap - this.experience;
         return gap;
     };
     
@@ -133,7 +132,7 @@ function Player(){
      */
     Player.prototype.giveExp = function(addExp){
         //add the exprience to the current experience
-        experience += addExp;
+        this.experience += addExp;
         //check for a level up
         checkLevelUp();
     };
@@ -145,20 +144,20 @@ function Player(){
         //log("Checking levelCap/exp: " + levelCap + " " + experience);
         //
         //while the experience is above the cap loop through this
-        while(experience >= levelCap){
+        while(this.experience >= this.levelCap){
             log("----LEVEL UP----");
             //increment the  level
-            level += 1;
+            this.level += 1;
             //level up the stats
             levelUpStats();
             //unlock the next skill, if applicable
-            unlockNextSkill();
+            //unlockNextSkill();
             //remove the current level cap from the experience pool
-            experience -= levelCap;
+            this.experience -= this.levelCap;
             //ramp up the level cap
-            levelCap += Math.ceil(levelCap*0.5);
+            this.levelCap += Math.ceil(levelCap*0.5);
             //increment the enemy level, to keep up a challenge
-            enemyLevel += 1;
+            //enemyLevel += 1;
             //print the player's stats
             player.printStats();
         }
@@ -170,7 +169,7 @@ function Player(){
     function unlockNextSkill(){
         //log("Unlocking special");
         //switch to unlock based on level
-        switch(level){
+        switch(this.level){
             case 2:
                 //at level 2 add double attack
                 var spec = new Special();
@@ -203,15 +202,15 @@ function Player(){
      */
     function levelUpStats(){
         //increment maximum health by 10% of current maximum health
-        maxHealth += Math.floor(maxHealth*0.1);
+        this.maxHealth += Math.floor(maxHealth*0.1);
         //give full health
-        health = maxHealth;
+        health = this.maxHealth;
         //increment power by 20% of current power
-        pow += Math.floor(pow*0.2);
+        this.pow += Math.floor(pow*0.2);
         //increment dexterity by 20% of current dexterity
-        dex += Math.floor(dex*0.2);
+        this.dex += Math.floor(dex*0.2);
         //increment wisdom by 20% of current wisdom
-        wis += Math.floor(wis*0.2);
+        this.wis += Math.floor(wis*0.2);
     };
     
     /*
@@ -220,7 +219,7 @@ function Player(){
      * @return level
      */
     Player.prototype.getLevel = function(){
-        return level;
+        return this.level;
     };
     
     /*
@@ -228,7 +227,7 @@ function Player(){
      */
     Player.prototype.addItem = function(item){
         //adds the items to the items array(or inventory)
-        items.push(item);
+        this.items.push(item);
     };
     
     /*
@@ -278,7 +277,7 @@ function Player(){
         //cycle through items
         for(var i=0;i<items.length;i++){
             //check if the input item's ID is the same as the current cycle item's ID
-            if(item.getID() === items[i].getID()){
+            if(item.getID() === this.items[i].getID()){
                 //set the temp varaible to the current index
                 tempNo = i;
             }
@@ -309,13 +308,13 @@ function Player(){
         //check if the active item is null
         if(!this.activeItem){
             //set the active item to the item at the first index
-            this.activeItem = items[0];
+            this.activeItem = this.items[0];
         }else{
             var currentIndex;
             //cycle through the items
             for(var i=0;i<items.length;i++){
                 //check if the active item and cycled item IDs match
-                if(this.activeItem.getID() === items[i].getID()){
+                if(this.activeItem.getID() === this.items[i].getID()){
                     //set the variable to the current index
                     currentIndex = i;
                 }
@@ -575,7 +574,7 @@ function Player(){
      * Method to set the health to a specified value
      */
     Player.prototype.setHealth = function(inHealth){
-        health = inHealth;
+        this.health = this.inHealth;
     };
     
     /*
@@ -584,28 +583,28 @@ function Player(){
      * @return health
      */
     Player.prototype.getHealth = function(){
-        return health;
+        return this.health;
     };
     
     /*
      * Method to set the maximum health to a certain value
      */
     Player.prototype.setMaxHealth = function(inHealth){
-        maxHealth = inHealth;
+        this.maxHealth = this.inHealth;
     };
     
     /*
      * Method to get the maximum health
      */
     Player.prototype.getMaxHealth = function(){
-        return maxHealth;
+        return this.maxHealth;
     };
     
     /*
      * Method to set the name
      */
     Player.prototype.setName = function(playerName){
-        name = playerName;
+        this.name = playerName;
     };
     
     /*
@@ -614,7 +613,7 @@ function Player(){
      * @return name
      */
     Player.prototype.getName = function(){
-        return name;
+        return this.name;
     };
     
     /*
@@ -624,27 +623,27 @@ function Player(){
         //if the input is not a number (null if not there, so fires too)
         if(typeof decrement != 'number'){
             //if health is about to drop to 0 or below
-            if(health-1<=0){
+            if(this.health-1<=0){
                 //set health to 0
-                health = 0;
+                this.health = 0;
                 //set dead
-                dead = true;
+                this.dead = true;
             }else{
                 //decrement health by 1
-                health--;
+                this.health--;
             }
         }else{
             //if health is about to drop to 0 or below
-            if(health-decrement<=0){
+            if(this.health-decrement<=0){
                 //set health to 0
-                health = 0;
+                this.health = 0;
                 //set dead
-                dead = true;
+                this.dead = true;
                 //show the end screen
                 showEndScreen();
             }else{
                 //decrement health by the input
-                health = health - decrement;
+                this.health = this.health - decrement;
             }
         }
     };
@@ -656,9 +655,10 @@ function Player(){
         //if(typeof target === Enemy){
         //
         //decrement the target's health by the power
-        target.decrementHealth(pow);
+        target.decrementHealth(this.pow);
+        tellPlayer(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
         //set the player's action time to 0
-        battle.setActionTime(0);
+        //battle.setActionTime(0);
         //}else{
           //  alert(typeof target);
         //}
@@ -690,7 +690,7 @@ function Player(){
      * @return pow
      */
     Player.prototype.getPow = function(){
-        return pow;
+        return this.pow;
     };
     
     /*
@@ -699,7 +699,7 @@ function Player(){
      * @return dex
      */
     Player.prototype.getDex = function(){
-        return dex;
+        return this.dex;
     };
     
     /*
@@ -708,7 +708,7 @@ function Player(){
      * @return wis
      */
     Player.prototype.getWis = function(){
-        return wis;
+        return this.wis;
     };
     
     /*
@@ -737,21 +737,21 @@ function Player(){
         //if the input is not a number (null if not there, so fires too)
         if(typeof increment != 'number'){
             //if the input is not a number (null if not there, so fires too)
-            if(health+1>=maxHealth){
+            if(this.health+1>=this.maxHealth){
                 //current health becomes maximum health
-                health = maxHealh;
+                this.health = maxHealh;
             }else{
                 //increment health by 1
-                health++;
+                this.health++;
             }
         }else{
             //if the health is about to hit, or go above, the maximum health
-            if(health +increment >= maxHealth){
+            if(this.health +increment >= this.maxHealth){
                 //current health becomes maximum health
-                health = maxHealth;
+                this.health = this.maxHealth;
             }else{
                 //increment gets added to health
-                health = health + increment;
+                this.health = this.health + increment;
             }
         }
     };
@@ -761,27 +761,73 @@ function Player(){
      */
     Player.prototype.printStats = function(){
         log("------Player Stats------");
-        log("Level: " + level);
-        log("Exp: " + experience);
-        log("Level Cap: " + levelCap);
-        log("Max Health: " + maxHealth);
-        log("Health: " + health);
-        log("Power: " + pow);
-        log("Dex: " + dex);
-        log("Will: " + wis);
-        log("# Specials: " + specials.length);
-        log("# Stock Specials: " + stockSpecials.length);
-        log("# Items: " + items.length);
-        log("Position: " + posX + ", " + posY);
+        log("Level: " + this.level);
+        log("Exp: " + this.experience);
+        log("Level Cap: " + this.levelCap);
+        log("Max Health: " + this.maxHealth);
+        log("Health: " + this.health);
+        log("Power: " + this.pow);
+        log("Dex: " + this.dex);
+        log("Will: " + this.wis);
+        log("# Specials: " + this.specials.length);
+        log("# Stock Specials: " + this.stockSpecials.length);
+        log("# Items: " + this.items.length);
+        log("Position: " + this.posX + ", " + this.posY);
         log("------End Player Stats------");
     };
     
     Player.prototype.move = function(x, y){
-        posX += x;
-        posY += y;
+        this.posX += x;
+        this.posY += y;
     };
     
     Player.prototype.getPos = function(){
-        return "(" + posX + ", " + posY + ")";
+        return [this.posX, this.posY];
     };
+    
+    Player.prototype.setBattleReady = function(inStatus){
+        this.battleReady = inStatus;
+    };
+    
+    Player.prototype.isBattleReady = function(){
+        return this.battleReady;
+    };
+    
+    Player.prototype.addTick = function(){
+        this.tick++;
+    };   
+    
+    Player.prototype.getTick = function(){
+        return this.tick;
+    };   
+    
+    switch(arguments.length){
+        //nothing
+        case 0:
+            
+            break;
+        //name
+        case 1:
+            this.name = arguments[0];
+            fillAvailSpec();
+            this.ranStats();
+            break;
+        //name, pos array
+        case 2:
+            this.name = arguments[0];
+            this.posX = arguments[1][0];
+            this.posY = arguments[1][1];
+            fillAvailSpec();
+            this.ranStats();
+            break;
+        //name, x, y
+        case 3:
+            this.name = arguments[0];
+            this.posX = arguments[1];
+            this.posY = arguments[2];
+            fillAvailSpec();
+            this.ranStats();
+            break;
+    }
+    
 };
