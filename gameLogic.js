@@ -224,6 +224,59 @@ function updateMap(){
     
     outputString += player.getName() + ": " + player.getPos() + "<br>";
     
+    
+    var percentage = 100/7;
+    
+    var blockColor = "#333333";
+    
+    for(var y=0;y<5;y++){
+        blockColor = "#333333";
+        for(var x=0;x<5;x++){
+            blockColor = "#333333";
+            for(var i=0;i<enemies.length;i++){
+                blockColor = "#333333";
+                if((enemies[i].getPos()[0] === (player.getPos()[0]-2+x))
+                        && (enemies[i].getPos()[1] === (player.getPos()[1]+2-y))){
+                    blockColor = "#d00000";
+                    break;
+                }else{
+                    blockColor = "#333333";
+                }
+            }
+            
+            if(x === 0){
+                outputString += "<div id=\"map"+x+""+y+"\""
+                +"style=\""
+                    +"margin-left:"+percentage+"%;"
+                    +"width:"+percentage+"%;"
+                    +"height:"+percentage+"%;"
+                    +"background-color:" + blockColor + ";"
+                    +"float:left;"
+                    +"\""
+                +"></div>";
+            }else if(x === 2 && y === 2){
+                outputString += "<div id=\"map"+x+""+y+"\""
+                +"style=\""
+                    +"width:"+percentage+"%;"
+                    +"height:"+percentage+"%;"
+                    +"background-color:#0000F0;"
+                    +"float:left;"
+                    +"\""
+                +">You are here</div>";
+            }else{
+                outputString += "<div id=\"map"+x+""+y+"\""
+                +"style=\""
+                    +"width:"+percentage+"%;"
+                    +"height:"+percentage+"%;"
+                    +"background-color:" + blockColor + ";"
+                    +"float:left;"
+                    +"\""
+                +"></div>";
+            }
+        }
+    }
+    
+    outputString += "<div style=\"float:left;overflow-y:scroll;width:100%;height:20%;\">";
     for(var i=0;i<enemies.length;i++){
         outputString += enemies[i].getName();
         outputString += ": ";
@@ -232,6 +285,7 @@ function updateMap(){
         outputString += "(" + getDistanceFromPlayer(enemies[i].getPos()) +")";
         outputString += "<br>";
     }
+    outputString += "</div>";
     
     phoneScreen.html("<center>" + outputString + "</center>");
 }
@@ -588,6 +642,8 @@ function getRandomEnemyName(){
     names.push("funky badger");
     names.push("tastey, yet poisonous, taco");
     names.push("slice of pizza");
+    names.push("dragon");
+    names.push("pack of dragons");
     
     
     var randomNo = Math.floor((Math.random() * names.length));
