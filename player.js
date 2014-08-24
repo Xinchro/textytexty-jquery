@@ -11,7 +11,7 @@ function Player(){
     this.pow = 5;
     this.dex = 3;
     this.wis = 4;
-    this.items = [];
+    this.inventory = [];
     this.specials = [];
     this.activeItem, this.activeSpecial;
     this.stockSpecials = [];
@@ -227,7 +227,7 @@ function Player(){
      */
     Player.prototype.addItem = function(item){
         //adds the items to the items array(or inventory)
-        this.items.push(item);
+        this.inventory.push(item);
     };
     
     /*
@@ -277,7 +277,7 @@ function Player(){
         //cycle through items
         for(var i=0;i<items.length;i++){
             //check if the input item's ID is the same as the current cycle item's ID
-            if(item.getID() === this.items[i].getID()){
+            if(item.getID() === this.inventory[i].getID()){
                 //set the temp varaible to the current index
                 tempNo = i;
             }
@@ -292,11 +292,11 @@ function Player(){
             battle.writeItemText("Items");
         }else if(tempNo+1 >= items.length){
             //if only 1 item left, set it to the first index(or 0)
-            this.activeItem = items[0];
+            this.activeItem = inventory[0];
             battle.writeItemText(this.activeItem.getName());
         }else if(tempNo+1 < items.length){
             //if more than 1 item left, then set it to the next item
-            this.activeItem = items[tempNo];
+            this.activeItem = inventory[tempNo];
             battle.writeItemText(this.activeItem.getName());
         }
     };
@@ -308,13 +308,13 @@ function Player(){
         //check if the active item is null
         if(!this.activeItem){
             //set the active item to the item at the first index
-            this.activeItem = this.items[0];
+            this.activeItem = this.inventory[0];
         }else{
             var currentIndex;
             //cycle through the items
             for(var i=0;i<items.length;i++){
                 //check if the active item and cycled item IDs match
-                if(this.activeItem.getID() === this.items[i].getID()){
+                if(this.activeItem.getID() === this.inventory[i].getID()){
                     //set the variable to the current index
                     currentIndex = i;
                 }
@@ -330,7 +330,7 @@ function Player(){
             }
             log("Current index: "  + currentIndex);
             //set the active item to the index we set
-            this.activeItem = items[currentIndex];
+            this.activeItem = inventory[currentIndex];
         }
     };
     
@@ -340,11 +340,11 @@ function Player(){
     Player.prototype.prevItem = function(){
         //this is the same as for the next item, but in reverse
         if(!this.activeItem){
-            this.activeItem = items[items.length-1];
+            this.activeItem = inventory[items.length-1];
         }else{
             var currentIndex;
             for(var i=0;i<items.length;i++){
-                if(this.activeItem.getID() === items[i].getID()){
+                if(this.activeItem.getID() === inventory[i].getID()){
                     currentIndex = i;
                 }
             }
@@ -355,7 +355,7 @@ function Player(){
                 currentIndex;
             }
             log("Current index: "  + currentIndex);
-            this.activeItem = items[currentIndex];
+            this.activeItem = inventory[currentIndex];
         }
     };
     
@@ -364,8 +364,8 @@ function Player(){
      * 
      * @return items
      */
-    Player.prototype.getItems = function(){
-        return items;
+    Player.prototype.getInventory = function(){
+        return this.inventory;
     };
     
     /*
@@ -656,7 +656,7 @@ function Player(){
         //
         //decrement the target's health by the power
         target.decrementHealth(this.pow);
-        tellPlayer(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
+        addCombatText(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
         //set the player's action time to 0
         //battle.setActionTime(0);
         //}else{
@@ -771,7 +771,7 @@ function Player(){
         log("Will: " + this.wis);
         log("# Specials: " + this.specials.length);
         log("# Stock Specials: " + this.stockSpecials.length);
-        log("# Items: " + this.items.length);
+        log("# Items: " + this.inventory.length);
         log("Position: " + this.posX + ", " + this.posY);
         log("------End Player Stats------");
     };

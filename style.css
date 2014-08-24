@@ -12,21 +12,24 @@ body{
 }
 
 #phone{
-    background-color: rgba(255,0,0,1);
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,1);
+    border-left:1px solid #303030;
     width: 50%;
     height: 100%;
     float: left;
 }
 
 #phoneButtons{
-    background-color: rgba(0,0,255,1);
+    /*background-color: rgba(0,0,255,1);*/
+    background-color: rgba(48,48,48,1);
     width: 100%;
     height: 10%;
 }
 
 .phoneButton{
-    box-sizing: border-box;
-    border: 2px solid rgba(100,0,0,1);
+/*    box-sizing: border-box;
+    border: 2px solid rgba(100,0,0,1);*/
     text-align: center;
     float: left;
     width: 20%;
@@ -40,34 +43,82 @@ body{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    
+    background-color: rgba(48,48,48,1);
+    background-image: url(button-background.svg);
+    
+    line-height: 100%;
+}
+
+.phoneButtonIcon{
+    background-color: rgba(48,48,48,1);
+    background-size: contain;
+    width: 90%;
+    height: 90%;
+    transformOrigin: center;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#inventoryButtonIcon{
+    background-image: url(inventoryIcon.svg);
+}
+#mapButtonIcon{
+    background-image: url(mapIcon.svg);
+}
+#statsButtonIcon{
+    background-image: url(statsIcon.svg);
+}
+#socialButtonIcon{
+    background-image: url(socialIcon.svg);
+}
+#aboutButtonIcon{
+    background-image: url(aboutIcon.svg);
 }
 
 #phoneScreen{
-    background-color: rgba(0,255,255,1);
+    background-color: rgba(255,255,255,.8);
     width: 100%;
     height: 90%;
 }
 
+/*#inventoryCheckBoxes{
+    background-color: rgba(0,200,200,1);
+    width: 5%;
+    height: 100%;
+    float: left;
+}*/
+
+#inventoryItemList{
+    /*background-color: rgba(180,240,240,1);*/
+    width: 100%;
+    height: 100%;
+    float: left;
+    overflow-y: scroll;
+}
+
 #game{
-    background-color: rgba(0,255,0,1);
+    background-color: rgba(0,0,0,1);
     width: 50%;
     height: 100%;
     float: left;
 }
 
+
 #gameButtons{
-    background-color: rgba(255,255,0,1);
-    display: table;
-    table-layout: auto;
-    border: 1px solid white;
+    background-color: rgba(255,255,255,1);
+/*    display: table;
+    table-layout: auto;*/
+    border: 0px solid white;
     width: 100%;
     height: 50%;
     float: left;
+    overflow: hidden;
 }
 
 .gameButton{
-    box-sizing: border-box;
-    border: 2px solid rgba(0,0,0,1);
+/*    box-sizing: border-box;
+    border: 2px solid rgba(0,0,0,1);*/
     background-color: rgba(255,255,255,1);  
     text-align: center;
     float: left;
@@ -82,13 +133,24 @@ body{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background-image: url(button-background.svg);
+    line-height: 100%;
+}
+
+#wrapper{
+    width: 100%;
+    height: 50%;
 }
 
 #gameScreen{
-    background-color: rgba(5 0,100,0,1);
+    background-color: rgba(255,255,255,.8);
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 150%;
     width: 100%;
     height: 50%;
     float: left;
+    overflow-y: scroll;
 }
 
 #log{

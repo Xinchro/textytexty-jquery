@@ -13,7 +13,9 @@ $(document).on("keydown", keyDown);
 $(document).on("keyup", keyUp);
 
 var critString = [];
+var critStringColor = [];
 var flavString = [];
+var flavStringColor = [];
 
 var phone;
 phone = $("phoneScreen");
@@ -21,12 +23,111 @@ phone = $("phoneScreen");
 var debug = false;
 $("#log").hide(); //.css("display", "none");
 
-$('.gameButton').click(function(){doClick($(this).attr('id'));});
+$(".gameButton").click(function(){doClick($(this).attr("id"));});
 
-$("#buttonE").html("E"+"<br>"+"Up");
-$("#buttonS").html("S"+"<br>"+"Left");
-$("#buttonF").html("F"+"<br>"+"Right");
-$("#buttonC").html("C"+"<br>"+"Down");
+$("#gameScreen").scroll($("#gameScreen").scrollTop(1));
+
+$(".phoneButtonIcon").css("height", "90%");
+$(".phoneButtonIcon").css("margin-top", $(".phoneButton").height()/100*5);
+$(".phoneButtonIcon").css("width", "90%");
+$(".phoneButtonIcon").css("margin-left", $(".phoneButton").width()/100*5);
+
+var textAreaWidth = $("#gameScreen")[0].scrollWidth;
+var areaWidth = $("#gameScreen").width();
+
+$("#gameScreen").width(areaWidth + (areaWidth-textAreaWidth));
+
+log("textareaWidth: " + textAreaWidth);
+
+//var inventoryAreaWidth = $("#inventoryItemList")[0].scrollWidth;
+//var inventoryWidth = $("#inventoryItemList").width();
+//
+//$("#inventoryItemList").width($("#inventoryItemList").width() + (inventoryWidth-inventoryAreaWidth));
+//
+//log("inventoryAreaWidth: " + inventoryAreaWidth);
+
+$("#buttonE").html("E"+"<br>"+"North");
+$("#buttonS").html("S"+"<br>"+"West");
+$("#buttonF").html("F"+"<br>"+"East");
+$("#buttonC").html("C"+"<br>"+"South");
+
+
+function resizeButtons(){
+    //needs to resize buttons if resolution is not divisible equally by 5
+    //center "cross" gets slightly bigger
+    //if width/5 != floor(width/5)*5
+    //log("widths " + $("#gameButtons").width()/5 + " " + Math.floor($("#gameButtons").width()/5)*5);
+    //log("widths check " + ($("#gameButtons").width()/5 !== Math.ceil($("#gameButtons").width()/5)*5));
+    if($("#gameButtons").width()/5 !== Math.floor($("#gameButtons").width()/5)*5){
+        ////buttons 3 E D C CTRL get bigger
+        ////// buttonwidth += (width - floor(width/5)*5)/2
+        //var newWidth = $("#button3").width()
+        //+ ($("#gameButtons").width()
+        //- Math.floor($("#gameButtons").width()/5)*5)*2;
+        
+        log("old width: " + $("#button3").width()); //borders make it 4 pixels less
+        
+//        var newWidth = $("#button3").width()
+//        + (($("#gameButtons").width()
+//        - ((Math.floor($("#gameButtons").width()/5))
+//        *5))/2)
+//        ;
+        
+        //newwidth = oldwidth -> original button width
+        //         + ((canvasWidth -> the whole thing
+        //         - (floored(canvasWidth/5) -> the whold thing divided by5, floored
+        //         * 5) -> gives us the floored value multiplied by 5 (smaller than the whole thing)
+        //         -> by this stage we have the difference between whole and floored
+        //         /2) -> to give us half of the leftover
+        //         -> now you should have everythign properly, OR NOT
+
+        //floor(233/5) = 46
+        //ceil(233/5) = 47
+        //log(Math.ceil(233/5));
+        
+        //log("new width: " + newWidth);
+        log("additional width: " + ($("#gameButtons").width() - ((Math.floor($("#gameButtons").width()/5))*5)));
+        
+//        $("#button3").width(newWidth);
+//        $("#buttonE").width(newWidth);
+//        $("#buttonD").width(newWidth);
+//        $("#buttonC").width(newWidth);
+//        $("#buttonCTRL").width(newWidth);
+    }else{
+        //else
+        ////do nothing
+    }
+
+    //log("heights " + $("#gameButtons").height()/5 + " " + Math.floor($("#gameButtons").height()/5));//  *5);
+    //log("heights check " + ($("#gameButtons").height()/5 !== Math.ceil($("#gameButtons").height()/5)*5));
+    //if height/5 != floor(height/5)*5    
+    if($("#gameButtons").height()/5 !== Math.ceil($("#gameButtons").height()/5)*5){
+        ////buttons A S D F G get bigger
+        //////buttonheight += (height - floor(height/5)*5)/2
+        //var newHeight = $("#buttonA").height()
+        //+ Math.ceil(($("#gameButtons").height()
+        //- ($("#gameButtons").height()/5)*5))*2;
+
+        //let's try something else:
+        
+//        var newHeight = Math.ceil($("#gameButtons").height()/5);
+//        
+//        //log("new height: " + newHeight);
+//        
+//        $("#buttonA").height(newHeight);
+//        $("#buttonS").height(newHeight);
+//        $("#buttonD").height(newHeight);
+//        $("#buttonF").height(newHeight);
+//        $("#buttonG").height(newHeight);
+    }else{
+        //else
+        ////do nothing
+    }
+    
+    //log("Buttons resized");
+}
+resizeButtons();
+
 
 function invClick(){
     log("invClick()");
@@ -268,7 +369,7 @@ function keyUp(e){
             break;
         case 69://e
 //            log("E up");
-            move("up");
+            move("north");
             break;
         case 82://r
 //            log("R up");
@@ -284,7 +385,7 @@ function keyUp(e){
             break;
         case 83://s
 //            log("S up");
-            move("left");
+            move("west");
             break;
         case 68://d
 //            log("D up");
@@ -296,7 +397,7 @@ function keyUp(e){
             break;
         case 70://f
 //            log("F up");
-            move("right");
+            move("east");
             break;
         case 71://g
 //            log("G up");
@@ -312,7 +413,7 @@ function keyUp(e){
             break;
         case 67://c
 //            log("C up");
-            move("down");
+            move("south");
             break;
         case 86://v
 //            log("V up");

@@ -10,7 +10,7 @@ function Enemy(){
     this.name = "Not Taco";
     this.dead;
     this.noOfPotions = 2;
-    this.pwr = 1;
+    this.pow = 1;
     //var statPoints = enemyLevel*10;
     this.model;
     this.posX = 0;
@@ -53,7 +53,7 @@ function Enemy(){
         
         //following the same convention as above
         tempNo = Math.floor(Math.random()*statPoints);
-        this.pwr += Math.floor(tempNo);
+        this.pow += Math.floor(tempNo);
         statPoints = statPoints - tempNo;
         
         //if it can carry on: decrement and run this all again
@@ -65,7 +65,7 @@ function Enemy(){
             console.log("------Enemy Final Stats------");
             console.log("Level: " + enemyLevel);
             console.log("Max Health: " + maxHealth);
-            console.log("Power: " + pwr);
+            console.log("Power: " + pow);
             console.log("Max points: " + enemyLevel*10);
             console.log("Remaining points: " + statPoints);
             console.log("------End Enemy Stats------");
@@ -144,7 +144,8 @@ function Enemy(){
      */
     Enemy.prototype.attack = function(target){
         //decrement the target's health by the power
-        target.decrementHealth(this.pwr);
+        target.decrementHealth(this.pow);
+        addCombatText(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
     };
     
     /*
@@ -153,7 +154,7 @@ function Enemy(){
      */
     Enemy.prototype.specialAttack = function(target){
         //attack the target with double the power
-        target.decrementHealth(this.pwr*2);
+        target.decrementHealth(this.pow*2);
     };
     
     /*
@@ -271,7 +272,7 @@ function Enemy(){
     Enemy.prototype.setDead = function(){
         //log("Enemy dead");
         this.dead = true;
-        addFlavorInfo(makeQuote(this.name, "I am dead."));
+        addFlavorInfo("blue", makeQuote(this.name, "I am dead."));
     };
     
     //variable to check if the chance has been increased for a special attack
