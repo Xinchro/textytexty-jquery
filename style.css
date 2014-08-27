@@ -17,7 +17,7 @@ body{
     border-left:1px solid #303030;
     width: 50%;
     height: 100%;
-    float: left;
+    float: right;
 }
 
 #phoneButtons{
@@ -161,4 +161,16 @@ body{
     top: 80%;
     overflow-y: scroll;
     display: block;
+}
+
+#textHeightCheck{
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+}
+
+.armorSlot{
+    float:left;
 }

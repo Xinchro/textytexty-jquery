@@ -11,7 +11,7 @@ function Enemy(){
     this.dead;
     this.noOfPotions = 2;
     this.pow = 1;
-    //var statPoints = enemyLevel*10;
+    //var statPoints = enemyplayer*10;
     this.model;
     this.posX = 0;
     this.posY = 0;
@@ -145,7 +145,9 @@ function Enemy(){
     Enemy.prototype.attack = function(target){
         //decrement the target's health by the power
         target.decrementHealth(this.pow);
-        addCombatText(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
+        if(!target.isDead()){
+            addCombatText(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
+        }
     };
     
     /*
@@ -273,6 +275,7 @@ function Enemy(){
         //log("Enemy dead");
         this.dead = true;
         addFlavorInfo("blue", makeQuote(this.name, "I am dead."));
+        this.onDeath();
     };
     
     //variable to check if the chance has been increased for a special attack
@@ -325,6 +328,13 @@ function Enemy(){
     
     Enemy.prototype.getPos = function(){
         return [this.posX, this.posY];
+    };
+    
+    /*
+     * Empty function for customization
+     */
+    Enemy.prototype.onDeath = function(){
+        //todo
     };
     
     switch(arguments.length){

@@ -8,8 +8,10 @@ var player = new Player("Player name");
 log("Player " + player.getName() + " spawned at " + player.getPos());
 //enemy.start("Enemy name", 0, 1);
 
+var map = new Map();
+
 var gameScreen = $("#gameScreen");
-gameScreen.append(player.getName() + ".");
+gameScreen.append(player.getName() + ". Try moving North first.");
 
 var phoneScreen = $("#phoneScreen");
 
@@ -19,11 +21,24 @@ var mapOpen = false;
 var socialOpen = false;
 var aboutOpen = false;
 
-var xSize = 10;
-var ySize = 10;
+var xSize = 5 - 1;//because 0
+var ySize = 5 - 1;
 
 var invCheckBoxArray = [];
 
+var availablePos = {};
+
+//for(var x=0;x<xSize;x++){
+//    //availablePos[x] = [true];
+//    //log("Available places x: " + availablePos);
+//    for(var y=0;y<ySize;y++){
+//        availablePos[x][y] = true;
+//        //availablePos[y] = true;
+//        //log("Available places y: " + availablePos);
+//    }    
+//}
+
+//log("Available places : " + availablePos[1][1]);
 
 /*
  * Phone button clicked event handling
@@ -78,18 +93,18 @@ function updatePhone(){
 for(var i=0;i<50;i++){
     var string = "";
     for(var j=0;j<i;j++){
-        if(j<24){
+        if(j<50){
             string += "*";
         }
     }
-    if(i<24){
+    if(i<50){
         string += "Length" + i;
     }else{
-        string += "Length" + "24";
+        string += "Length" + "50";
     }
     
     for(var j=0;j<i;j++){
-        if(j<24){
+        if(j<50){
             string += "*";
         }
     }
@@ -131,12 +146,20 @@ function updateInventory(){
     phoneScreen.html("<center>" + outputString + "</center>");
     
     
+    $("#inventoryItemList").css("overflow-x", "auto");
     $("#inventoryItemList").css("overflow-y", "scroll");
-    //$("#inventoryItemList").css("overflow-x", "hidden");
-    var inventoryAreaWidth = $("#inventoryItemList")[0].scrollWidth;
-    var inventoryWidth = $("#inventoryItemList").width();
+    $("#phone").css("overflow", "scroll");
+    var areaWidth = $("#phone")[0].scrollWidth;
+    var width = $("#phone").width();
     
-    $("#inventoryItemList").width(inventoryWidth + (inventoryWidth-inventoryAreaWidth));
+    $("#inventoryItemList").width(width + (width-areaWidth));
+    
+    var areaHeight = $("#phone")[0].scrollHeight;
+    var height = $("#phone").height();
+    
+    $("#inventoryItemList").height(height + (height-areaHeight));
+    
+    $("#phone").css("overflow", "hidden");
     //$("#inventoryCheckBoxes").html("<center>" + outputStringBoxes + "</center>");
     for(var i=0;i<invCheckBoxArray.length;i++){
         if(invCheckBoxArray[i]){
@@ -174,9 +197,18 @@ function updateChecks(){
         outputString += invCheckBoxArray[i] + " ";
     }
     
-    log("checks #: " + invCheckBoxArray.length);
-    log("checks: " + outputString);
+    //log("checks #: " + invCheckBoxArray.length);
+    //log("checks: " + outputString);
 }
+
+/*
+ * Play a sound
+ */
+function playSound(soundfile) {
+    var sound = new Audio(soundfile);
+    sound.play();
+}
+
 
 /*
  * Update the phone screen with the stats information
@@ -185,10 +217,241 @@ function updateStats(){
     log("Checking stats");
     //$("#stats").replaceWith(player.getName());
     
-    var outputString = ""
-    +"Name: "
+    var outputString = "";
+    
+    outputString += "Name: "
     +player.getName()
     +"<br>"
+    +"Health: "
+    +player.getHealth() + " / " + player.getMaxHealth()
+    +"<br>";
+    
+    outputString += "Armor: "
+    +player.getCombinedArmor()
+    +"<br>";
+    //+"Health: "
+    //+player.getHealth() + " / " + player.getMaxHealth()
+    //+"<br>";
+    
+    var bodyPieceWidth = $("#phone").width()/7;
+    var bodyPieceHeight = 10;
+    if($("#phoneScreen").height()/7 < bodyPieceWidth){
+        bodyPieceHeight = $("#phone").height()/7;
+    }else{
+        bodyPieceHeight = bodyPieceWidth;
+    }
+    
+    var percentage = 100/7;
+    var onepercent = 1/100;
+    var marginT = bodyPieceHeight * onepercent;
+    var marginR = bodyPieceWidth * onepercent;
+    var marginB = bodyPieceHeight * onepercent;
+    var marginL = bodyPieceWidth * onepercent;
+
+    var tempTestColor = "#303030";
+    
+    var headColor = tempTestColor;
+    var armLeftColor = tempTestColor;
+    var torsoColor = tempTestColor;
+    var armRightColor = tempTestColor;
+    var legsColor = tempTestColor;
+    var feetLeftColor = tempTestColor;
+    var feetRightColor = tempTestColor;
+    
+    outputString+= "<div id=\"playerHead\" class=\"armorSlot\""
+                    + "style=\""
+                        + "margin-top:" + marginT*1 + "%;"
+                        + "margin-right:" + marginR*1 + "%;"
+                        + "margin-bottom:" + marginB*1 + "%;"
+                        + "margin-left:" + (percentage*3 + marginL) + "%;"
+                        + "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                        + "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                        + "background-color:" + headColor + ";"
+                    +"\">"
+            + "<div>" 
+                    + "<img src=\""
+                    + player.armorHead.getImg() + "\""
+                    //+ "background-position: center center;"
+                    //+ "background-repeat: no-repeat;"
+                    //+ "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                    //+ "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                    + "height=\"" + 100 + "%\""
+                    + "width=\"" + 100 + "%\""
+                +">"
+            + "</div>"
+                //+"<img href=\"" + player.armorHead.getImg() + "\" height=\"" + (bodyPieceHeight-marginT-marginB) + "\"" + "width=\"" + (bodyPieceWidth-marginR-marginL) + "\"></img>"
+                //+   player.armorHead.getName()
+                //+   "<br>"
+                //+   player.armorHead.getArmor()
+                +   "</div>"
+            + "<br>";
+    
+    outputString+= "<div id=\"playerArmLeft\" class=\"armorSlot\""
+                    + "style=\""
+                        + "margin-top:" + marginT*1 + "%;"
+                        + "margin-right:" + marginR*1 + "%;"
+                        + "margin-bottom:" + marginB*1 + "%;"
+                        + "margin-left:" + (percentage*2 - (marginL/2)) + "%;"// /2 cuz even number
+                        + "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                        + "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                        + "background-color:" + armLeftColor + ";"
+                    +"\">"
+            + "<div>" 
+                    + "<img src=\""
+                    + player.armorArmLeft.getImg() + "\""
+                    //+ "background-position: center center;"
+                    //+ "background-repeat: no-repeat;"
+                    //+ "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                    //+ "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                    + "height=\"" + 100 + "%\""
+                    + "width=\"" + 100 + "%\""
+                +">"
+            + "</div>"
+//                +  player.armorArmLeft.getName()
+//                +  "<br>"
+//                +  player.armorArmLeft.getArmor()
+                +  "</div>"
+            ;
+    
+    outputString+= "<div id=\"playerTorso\" class=\"armorSlot\""
+                    + "style=\""
+                        + "margin-top:" + marginT*1 + "%;"
+                        + "margin-right:" + marginR*1 + "%;"
+                        + "margin-bottom:" + marginB*1 + "%;"
+                        + "margin-left:" + (percentage*0 + marginL) + "%;"
+                        + "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                        + "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                        + "background-color:" + torsoColor + ";"
+                    +"\">"
+            + "<div>" 
+                    + "<img src=\""
+                    + player.armorTorso.getImg() + "\""
+                    //+ "background-position: center center;"
+                    //+ "background-repeat: no-repeat;"
+                    //+ "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                    //+ "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                    + "height=\"" + 100 + "%\""
+                    + "width=\"" + 100 + "%\""
+                +">"
+            + "</div>"
+//                +  player.armorTorso.getName()
+//                +  "<br>"
+//                +  player.armorTorso.getArmor()
+                +  "</div>"
+            ;
+    
+    outputString+= "<div id=\"playerArmRight\" class=\"armorSlot\""
+                    + "style=\""
+                        + "margin-top:" + marginT*1 + "%;"
+                        + "margin-right:" + marginR*1 + "%;"
+                        + "margin-bottom:" + marginB*1 + "%;"
+                        + "margin-left:" + (percentage*0 + marginL) + "%;"
+                        + "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                        + "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                        + "background-color:" + armRightColor + ";"
+                    +"\">"
+            + "<div>" 
+                    + "<img src=\""
+                    + player.armorArmRight.getImg() + "\""
+                    //+ "background-position: center center;"
+                    //+ "background-repeat: no-repeat;"
+                    //+ "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                    //+ "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                    + "height=\"" + 100 + "%\""
+                    + "width=\"" + 100 + "%\""
+                +">"
+            + "</div>"
+//                +  player.armorArmRight.getName()
+//                +  "<br>"
+//                +  player.armorArmRight.getArmor()
+                +  "</div>"
+//            + "<br>"
+            ;
+    
+    outputString+= "<div id=\"playerLegs\" class=\"armorSlot\""
+                    + "style=\""
+                        + "margin-top:" + marginT*1 + "%;"
+                        + "margin-right:" + marginR*1 + "%;"
+                        + "margin-bottom:" + marginB*1 + "%;"
+                        + "margin-left:" + (percentage*3 + marginL) + "%;"
+                        + "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                        + "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                        + "background-color:" + legsColor + ";"
+                    +"\">"
+            + "<div>" 
+                    + "<img src=\""
+                    + player.armorLegs.getImg() + "\""
+                    //+ "background-position: center center;"
+                    //+ "background-repeat: no-repeat;"
+                    //+ "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                    //+ "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                    + "height=\"" + 100 + "%\""
+                    + "width=\"" + 100 + "%\""
+                +">"
+            + "</div>"
+//                +  player.armorLegs.getName()
+//                +  "<br>"
+//                +  player.armorLegs.getArmor()
+                +  "</div>"
+//            + "<br>"
+            ;
+    outputString+= "<div id=\"playerFeetLeft\" class=\"armorSlot\""
+                    + "style=\""
+                        + "margin-top:" + marginT*1 + "%;"
+                        + "margin-right:" + marginR*1 + "%;"
+                        + "margin-bottom:" + marginB*1 + "%;"
+                        + "margin-left:" + (percentage*2.5 -(marginL/2)) + "%;"// /2 cuz even number
+                        + "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                        + "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                        + "background-color:" + feetLeftColor + ";"
+                    +"\">"
+            + "<div>" 
+                    + "<img src=\""
+                    + player.armorFootLeft.getImg() + "\""
+                    //+ "background-position: center center;"
+                    //+ "background-repeat: no-repeat;"
+                    //+ "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                    //+ "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                    + "height=\"" + 100 + "%\""
+                    + "width=\"" + 100 + "%\""
+                +">"
+            + "</div>"
+//                +  player.armorFootLeft.getName()
+//                +  "<br>"
+//                +  player.armorFootLeft.getArmor()
+                +  "</div>"
+            ;
+            
+    outputString+= "<div id=\"playerFeetRight\" class=\"armorSlot\""
+                    + "style=\""
+                        + "margin-top:" + marginT*1 + "%;"
+                        + "margin-right:" + marginR*1 + "%;"
+                        + "margin-bottom:" + marginB*1 + "%;"
+                        + "margin-left:" + (percentage*0 + marginL) + "%;"
+                        + "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                        + "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                        + "background-color:" + feetRightColor + ";"
+                    +"\">"
+            + "<div>" 
+                    + "<img src=\""
+                    + player.armorFootRight.getImg() + "\""
+                    //+ "background-position: center center;"
+                    //+ "background-repeat: no-repeat;"
+                    //+ "height:" + (bodyPieceHeight-marginT-marginB) + ";"
+                    //+ "width:" + (bodyPieceWidth-marginR-marginL) + ";"
+                    + "height=\"" + 100 + "%\""
+                    + "width=\"" + 100 + "%\""
+                +">"
+            + "</div>"
+//                +  player.armorFootRight.getName()
+//                +  "<br>"
+//                +  player.armorFootRight.getArmor()
+                +  "</div>"
+//            + "<br>"
+            ;
+            
+    
+    outputString += "<div id=\"playerStats\" style=\"float:left;overflow=scroll;\">"
     +"Level: "
     +player.getLevel()
     +"<br>"
@@ -210,6 +473,7 @@ function updateStats(){
     +"Actions: "
     +player.getTick()
     +"<br>"
+    +"</div>"
     ;
             
     phoneScreen.html("<center>" + outputString + "</center>");
@@ -236,8 +500,9 @@ function updateMap(){
             for(var i=0;i<enemies.length;i++){
                 blockColor = "#333333";
                 if((enemies[i].getPos()[0] === (player.getPos()[0]-2+x))
-                        && (enemies[i].getPos()[1] === (player.getPos()[1]+2-y))){
-                    blockColor = "#d00000";
+                        && (enemies[i].getPos()[1] === (player.getPos()[1]+2-y))
+                        && (!enemies[i].isDead())){
+                    blockColor = "#800000";
                     break;
                 }else{
                     blockColor = "#333333";
@@ -259,7 +524,7 @@ function updateMap(){
                 +"style=\""
                     +"width:"+percentage+"%;"
                     +"height:"+percentage+"%;"
-                    +"background-color:#0000F0;"
+                    +"background-color:#000080;"
                     +"float:left;"
                     +"\""
                 +">You are here</div>";
@@ -321,23 +586,35 @@ function updateSocial(){
  */
 function updateAbout(){
     var outputString = "ABOUT GOES HERE!";
+    var twitter = "<img src=\"TwitterIcon.svg\" height=\""+ $("#textHeightCheck").height() +"\"></img>";
+    var steam = "<img src=\"SteamIcon.svg\" height=\"" + $("#textHeightCheck").height() + "\"></img>";
+    
+    var logoWidth = $("#phoneScreen").width();
+    var logo = "";
+    
+    if(logoWidth <= 640){
+        logo = "<img src=\"http://xinchronize.com/wp-content/uploads/2014/06/XincWingLogo640x125.png\"";
+    }else{
+        logo = "<img src=\"http://xinchronize.com/wp-content/uploads/2014/06/XincWingLogo-1024x256.png\"";
+    }
+    
     outputString = "";
     
     //outputString += "ABOUT <br>";
     outputString += "Fancypants people that helped: <br>";
-    outputString += "twitter icon <a href=\"http://twitter.com/bigmacbook\">Bigmacbook</a> <br>";
-    outputString += "twitter icon <a href=\"http://twitter.com/epictek\">Epictek</a> <br>";
-    outputString += "twitter icon <a href=\"http://twitter.com/f0rum1\">F0rum</a> <br>";
-    outputString += "twitter icon <a href=\"http://twitter.com/kados\">Kados</a> <br>";
-    outputString += "twitter icon <a href=\"http://twitter.com/kniffen\">Kniffen</a> <br>";
-    outputString += "twitter icon <a href=\"http://twitter.com/thejapester\">Japester</a> <br>";
-    outputString += "steam icon <a href=\"http://steamcommunity.com/profiles/76561197994506706/\">Tiddl3ywinks</a> <br>";
+    outputString += "<a href=\"http://twitter.com/bigmacbook\" style=\"text-decoration:none;\">"+twitter+"Bigmacbook</a> <br>";
+    outputString += "<a href=\"http://twitter.com/epictek\" style=\"text-decoration:none;\">"+twitter+"Epictek</a> <br>";
+    outputString += "<a href=\"http://twitter.com/f0rum1\" style=\"text-decoration:none;\">"+twitter+"F0rum</a> <br>";
+    outputString += "<a href=\"http://twitter.com/kados\" style=\"text-decoration:none;\">"+twitter+"Kados</a> <br>";
+    outputString += "<a href=\"http://twitter.com/kniffen\" style=\"text-decoration:none;\">"+twitter+"Kniffen</a> <br>";
+    outputString += "<a href=\"http://twitter.com/thejapester\" style=\"text-decoration:none;\">"+twitter+"Japester</a> <br>";
+    outputString += "<a href=\"http://steamcommunity.com/profiles/76561197994506706/\" style=\"text-decoration:none;\">"+steam+"Tiddl3ywinks</a> <br>";
     outputString += "<br>";
     outputString += "<br>";
     outputString += "Author: <br>";
-    outputString += "twitter icon <a href=\"http://twitter.com/xinchronize\">@Xinchronize</a> <br>";
+    outputString += "<a href=\"http://twitter.com/xinchronize\" style=\"text-decoration:none;\">"+twitter+"Xinchronize</a> <br>";
     outputString += "<a href=\"http://xinchronize.com\">";
-        outputString += "<img src=\"http://xinchronize.com/wp-content/uploads/2014/06/XincWingLogo640x125.png\"";
+        outputString += logo;
              outputString += "alt=\"Xinchronize\"";
              outputString += "title=\"Xinchronize\"";
              outputString += "style=\"width:100%;\">";
@@ -380,46 +657,124 @@ function move(dir){
 }
 var enemy;
 
+var playerAttacking = false;
+
 /*
  * Main "loop" (activates every player action)
  */
 function tick(){
-    var outputString;
-    
-    player.addTick();
-    
-    if(player.isBattleReady()){
-        enemy.attack(player);
-        //log("enemy attacking player");
-    }else{
-    }
-    
-    for(var i=0;i<enemies.length;i++){
-        enemy=enemies[i];
-        if(player.getPos()[0] === enemy.getPos()[0]
-            && player.getPos()[1] === enemy.getPos()[1]
-            && !enemy.isDead()){    
-            //log("Enemy and player in the same room " +  enemy.getPos()  +  " " + player.getPos());
-            if(!player.isBattleReady()){
-                outputString = "There is " + getProperIndefinite(enemy.getName()) + " here.";
-                addCombatText(outputString);
+    if(!player.isDead()){
+        var outputString;
+
+        player.addTick();
+
+//        if(player.isBattleReady()){
+//            enemy.attack(player);
+//            //log("enemy attacking player");
+//        }else{
+//        }
+
+        for(var i=0;i<enemies.length;i++){
+            enemy=enemies[i];
+            if(player.getPos()[0] === enemy.getPos()[0]
+                && player.getPos()[1] === enemy.getPos()[1]
+                && !enemy.isDead()){    
+                //log("Enemy and player in the same room " +  enemy.getPos()  +  " " + player.getPos());
+                if(!player.isBattleReady()){
+                    outputString = "There is " + getProperIndefinite(enemy.getName()) + " here.";
+                    addCombatText(outputString);
+                }
+                if(!phoneActive){
+                    canMoveNorth = false;
+                }
+                player.setBattleReady(true);
+                if(playerAttacking){
+                    addAttackBuffer(player, enemy);
+                }
+                addAttackBuffer(enemy, player);
+                //$("#buttonD").html("D<br>Attack");
+
+                break;
+            }else{
+                player.setBattleReady(false);
+                //$("#buttonD").html("D");
             }
-            player.setBattleReady(true);
-            $("#buttonD").html("D<br>Attack");
-            
-            break;
-        }else{
-            player.setBattleReady(false);
-            $("#buttonD").html("D");
         }
+
+        
+
+        checkSelectedItems();
+
+        doAttackBuffer();
+        player.checkLevelUp();
+        tellCriticalInfo();
+        tellFlavorInfo();
+
+        updatePhone();
+        
+        playerAttacking = false;
+    }else{
+        
+    }
+    updateButtonText();
+}
+
+var attackBuffer = [];
+
+function addAttackBuffer(actor1, actor2){
+    attackBuffer.push([actor1, actor2]);
+}
+
+function doAttackBuffer(){
+    for(var i=0; i<attackBuffer.length;i++){
+       doAttack(attackBuffer[i][0], attackBuffer[i][1]);
+    }
+    attackBuffer =[];
+}
+
+function doAttack(actor1, actor2){
+    //actor1.attack(actor2);
+    if(player.isBattleReady() && actor2.getHealth() !== 0){
+        actor1.attack(actor2);
+    }else{
+        questionPlayerActions();
+    }
+}
+
+function updateButtonText(){
+//    if(player.getPos()[0] === enemy.getPos()[0]
+//            && player.getPos()[1] === enemy.getPos()[1]
+//            && !enemy.isDead()){
+//        $("#buttonD").html("D<br>Attack");
+//    }else{
+//        $("#buttonD").html("D");
+//    }
+
+    if(player.isBattleReady()){
+        $("#buttonD").html("D<br>Attack");
+    }else if(player.isDead()){
+        $("#buttonD").html("D<br>Replay");
+    }else{
+        $("#buttonD").html("D");
     }
     
-    checkSelectedItems();
+    $("#buttonE").html("E"+"<br>"+"");
+    $("#buttonS").html("S"+"<br>"+"");
+    $("#buttonC").html("C"+"<br>"+"");
+    $("#buttonF").html("F"+"<br>"+"");
     
-    tellCriticalInfo();
-    tellFlavorInfo();
-    
-    updatePhone();
+    if(canMoveNorth){
+        $("#buttonE").html("E"+"<br>"+"North");
+    }
+    if(canMoveWest){
+        $("#buttonS").html("S"+"<br>"+"West");
+    }
+    if(canMoveSouth){
+        $("#buttonC").html("C"+"<br>"+"South");
+    }
+    if(canMoveEast){
+        $("#buttonF").html("F"+"<br>"+"East");
+    }
 }
 
 /*
@@ -654,34 +1009,69 @@ function getRandomEnemyName(){
 }
 
 /*
- * Get a random X value, between 0 and the x size of the map
+ * Get a random X value, between the -ve x size and the +ve x size of the map
  */
 function randomX(){
-    var randomX = Math.floor((Math.random() * xSize));
+    var randomX = Math.floor((Math.random() * (xSize*2))-xSize);
     //log("X: " + randomX);
     return randomX;
 }
 
 /*
- * Get a random X value, between 0 and the y size of the map
+ * Get a random X value, between the -ve y size and the +ve y size of the map
  */
 function randomY(){
-    var randomY = Math.floor((Math.random() * ySize));
+    var randomY = Math.floor((Math.random() * (ySize*2)) - ySize);
     //log("Y: " + randomY);
     return randomY;
 }
 
 var enemies = [];
+var enemySpawnTick = 0;
+var enemySpawnMaxTick = 10;
 /*
  * Add a new enemy to the map and the array
  */
 function addNewEnemy(inName, inX, inY){
-    if(inX===0 && inY===0){
-        addNewEnemy(new Enemy(getRandomEnemyName(), randomX(), randomY()));
+    var genNew = false;
+//    enemySpawnTick;
+//    enemySpawnMaxTick;
+    if(inX === 0 && inY === 0){
+        genNew = true;
+        log("need to regenerate enemy because spawn: " + inX + " " + inY);// + " vs " + 0 + " " + 0 + " in " + xSize + " " + ySize);
+    }else{
+        for(var i=0;i<enemies.length;i++){
+//            log("enemy check: " + enemies[i].getPos()[0] + " " + enemies[i].getPos()[1]);
+            if((enemies[i].getPos()[0] === inX && enemies[i].getPos()[1] === inY)){
+//            if(!availablePos[inX][inY]){
+                genNew = true;
+                log("need to regenerate enemy because enemy: " + inX + " " + inY);// + " vs " + enemies[i].getPos()[0] + " " + enemies[i].getPos()[1]);
+                break;
+            }else{
+                genNew = false;
+            }
+        }
     }
-    var newEnemy = new Enemy(inName, inX, inY);
-    enemies.push(newEnemy);
-    log("New enemy: " + newEnemy.getName() + " " + newEnemy.getPos());
+    
+    if(enemySpawnTick >= enemySpawnMaxTick){
+        genNew = false;
+        log("too many recursions "  + enemySpawnTick + " / " + enemySpawnMaxTick);
+    }
+    
+    log("gen new? " + genNew + " " + enemySpawnTick + " / " + enemySpawnMaxTick);
+    
+    if(genNew){
+        enemySpawnTick += 1;
+        log("regening enemy");
+        addNewEnemy(getRandomEnemyName(), randomX(), randomY());
+    }else{
+        var newEnemy = new Enemy(inName, inX, inY);
+        enemies.push(newEnemy);
+//        availablePos[inX][inY] = false;
+        log("New enemy: " + newEnemy.getName() + " " + newEnemy.getPos());
+        enemySpawnTick = 0;
+        return newEnemy;
+    }
 }
 
 /*
@@ -689,18 +1079,21 @@ function addNewEnemy(inName, inX, inY){
  */
 function addEnemies(inNumber){
     for(var i=0; i<inNumber; i++){
-        var newEnemy = new Enemy(getRandomEnemyName(), randomX(), randomY());
-        enemies.push(newEnemy);
-        log("Enemy #"+i+" " + newEnemy.getName() + " spawned at " + newEnemy.getPos());
+//          var newEnemy = new Enemy(getRandomEnemyName(), randomX(), randomY());
+            addNewEnemy(getRandomEnemyName(), randomX(), randomY());
+//          enemies.push(newEnemy);
+//          log("Enemy #"+i+" " + newEnemy.getName() + " spawned at " + newEnemy.getPos());
     }
 //         = enemies[enemies.length-1];
 }
 
-addNewEnemy("albatros", 0, 1);
-addEnemies(20);
+function clearEnemies(){
+    enemies = [];
+    log("-----Enemies cleared-----");
+}
 
 /*
- * Remove an enemy from the array, based on etiehr index #  or name
+ * Remove an enemy from the array, based on either index #  or name
  */
 //removeEnemy(enemies[0]);
 function removeEnemy(inEnemy){
@@ -714,3 +1107,54 @@ function removeEnemy(inEnemy){
         enemies.splice(inEnemy, 1);
     }
 }
+
+var firstAlbatros = addNewEnemy("albatros", 0, 1);
+addEnemies(10);
+
+firstAlbatros.onDeath = function(){phoneSlideIn();};
+
+
+function adjustGameScreen(){
+    
+    $("#gameButtons").css({"overflow-y": "scroll"});
+    var textAreaWidth = $("#gameButtons")[0].scrollWidth;//area without scrollbar
+    var areaWidth = $("#gameButtons").width();//area with scrollbar
+    var newWidth = areaWidth + (areaWidth-textAreaWidth);
+    //newWidth = newWidth/2;
+    $("#gameButtons").css({"overflow-y": "hidden"});
+    
+    //$("#gameScreen").css({"overflow-y": "scroll"});
+    //$("#gameScreen").width(areaWidth + (areaWidth-textAreaWidth));
+    $("#gameScreen").css({width: newWidth});//, 1000, "", 
+    //function(){log("game screen adjusted " + newWidth);});
+    //$("#gameScreen").animate({width: 10});
+    //log("newwidth " + " " + areaWidth + " " + textAreaWidth + " " + newWidth);
+    
+}
+
+function phoneSlideIn(){
+    addFlavorInfo("You find a dusty old smartphone on the floor.");
+    $("#phone").show(0);
+    $("#game").animate({width: "50%"}, 1000, "linear", function(){adjustGameScreen();});
+    $("#phone").animate({"margin-right": "0"}, 1001, "linear", function(){});
+    phoneActive = true;
+    canMoveNorth = true;
+    canMoveWest = true;
+    canMoveSouth = true;
+    canMoveEast = true;
+//    $("#game").animate({width: "50%"}, 1000, "", function(){adjustGameScreen();});
+    //$("#game").css({float:"left"});
+    //$("#gameScreen").animate({width: "100%"}, 1000, "", adjustGameScreen());
+    //$("#gameScreen").css({float:"left"});//, "overflow-y":"scroll"});
+//    $("#phone").animate({width: "50%"}, 1000);//, "", adjustGameScreen());//, 1000, "", adjustGameScreen());
+    //$("#phone").css({float:"right"});
+    //adjustGameScreen();
+}
+
+$("#phone").css({width: "50%", "margin-right": "-50%", float:"right", "z-index":"10"});
+$("#phone").hide(0);
+$("#gameScreen").css({width: "100%", float:"left"});
+$("#game").css({width: "100%", float:"left"});
+adjustGameScreen();
+
+$(window).on('resize orientationChanged', function() {adjustGameScreen(); updatePhone();});

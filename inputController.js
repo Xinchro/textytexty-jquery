@@ -17,8 +17,16 @@ var critStringColor = [];
 var flavString = [];
 var flavStringColor = [];
 
+var phoneActive = false;
+var canMoveNorth = true;
+var canMoveWest = false;
+var canMoveSouth = false;
+var canMoveEast = false;
+
 var phone;
 phone = $("phoneScreen");
+
+var armorTypes = Object.freeze({HEAD:0, ARM:1, TORSO:2, LEGS:3, FOOT:4});
 
 var debug = false;
 $("#log").hide(); //.css("display", "none");
@@ -47,9 +55,6 @@ log("textareaWidth: " + textAreaWidth);
 //log("inventoryAreaWidth: " + inventoryAreaWidth);
 
 $("#buttonE").html("E"+"<br>"+"North");
-$("#buttonS").html("S"+"<br>"+"West");
-$("#buttonF").html("F"+"<br>"+"East");
-$("#buttonC").html("C"+"<br>"+"South");
 
 
 function resizeButtons(){
@@ -341,7 +346,10 @@ function keyUp(e){
     switch(e.keyCode){
         case 49://1
 //            log("1 up");
-            questionPlayerActions();
+            //questionPlayerActions();
+            //clearEnemies();
+            //addEnemies(10);
+            log(player.getCombinedArmor());
             break;
         case 50://2
 //            log("2 up");
@@ -369,7 +377,9 @@ function keyUp(e){
             break;
         case 69://e
 //            log("E up");
-            move("north");
+            if(canMoveNorth){
+                move("north");
+            }
             break;
         case 82://r
 //            log("R up");
@@ -385,19 +395,20 @@ function keyUp(e){
             break;
         case 83://s
 //            log("S up");
-            move("west");
+            if(canMoveWest){
+                move("west");
+            }
             break;
         case 68://d
 //            log("D up");
-            if(player.isBattleReady() && enemy.getHealth() !== 0){
-                player.attack(enemy);
-            }else{
-                questionPlayerActions();
-            }
+            //addAttackBuffer(player);
+            playerAttacking = true;
             break;
         case 70://f
 //            log("F up");
-            move("east");
+            if(canMoveEast){
+                move("east");
+            }
             break;
         case 71://g
 //            log("G up");
@@ -413,7 +424,9 @@ function keyUp(e){
             break;
         case 67://c
 //            log("C up");
-            move("south");
+            if(canMoveSouth){
+                move("south");
+            }
             break;
         case 86://v
 //            log("V up");
@@ -441,6 +454,7 @@ function keyUp(e){
             break;
         case 32://space
 //            log("SPACE up");
+            adjustGameScreen();
             questionPlayerActions();
             break;
             

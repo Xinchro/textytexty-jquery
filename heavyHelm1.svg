@@ -11,12 +11,12 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="100"
    height="100"
-   id="svg3765"
+   id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="AboutIcon.svg">
+   sodipodi:docname="heavyHelm1.svg">
   <defs
-     id="defs3767" />
+     id="defs4" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -24,37 +24,34 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.8023256"
-     inkscape:cx="40.388033"
-     inkscape:cy="46.235518"
+     inkscape:zoom="4.8705263"
+     inkscape:cx="36.802893"
+     inkscape:cy="30.386454"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     showguides="true"
+     showguides="false"
      inkscape:window-width="1440"
      inkscape:window-height="878"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:guide-bbox="true"
-     inkscape:snap-grids="true">
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
-       id="grid3811"
+       id="grid2985"
        empspacing="5"
        visible="true"
        enabled="true"
        snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <metadata
-     id="metadata3770">
+     id="metadata7">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -62,19 +59,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-952.36218)">
+     transform="translate(0,-952.36217)">
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3.88446331px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 46.675582,1037.3622 c 0,3.0544 3.607786,6.2913 6.662209,6.2913 3.054423,0 6.662209,-3.2369 6.662209,-6.2913 0,-3.0544 -3.607786,-6.2913 -6.662209,-6.2913 -3.054423,0 -6.662209,3.2369 -6.662209,6.2913 z"
-       id="path4660"
+       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:8.50000000000000000;stroke-opacity:1;stroke-dasharray:none"
+       d="m 10,1037.3622 c 25,5 55,5 80,0 l -5,-15 0,-30.00003 -35,-25 -35,25 0,30.00003 z"
+       id="path2987-1-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="aaaaa" />
+       sodipodi:nodetypes="cccccccc" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 50,5 c 25,0 35,15 30,25 -5,10 -25,25 -30,30 -5,5 5,15 5,15 L 45,75 C 45,75 30,60 35,55 40,50 60,35 65,30 70,25 65,15 50,15 35,15 35,40 35,40 L 15,30 C 15,30 25,5 50,5 z"
-       id="path4620"
+       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:8.5;stroke-opacity:1;stroke-dasharray:none"
+       d="m 55,1002.3622 5,5 c 5,-10e-5 20,-5 20,-15.00003 -5,-5 -12.54644,-10 -20,-10 -3.72678,0 -10,5 -10,5 0,0 -6.27322,-5 -10,-5 -7.45356,0 -15,5 -20,10 0,10.00003 15,14.99993 20,15.00003 l 5,-5 -5,35 -5,10 c 0,0 -14.020123,-1.6143 -20,-5 -2.051081,-1.1613 -5,-5 -5,-5 l 5,-15 c 0,0 -5.5488606,-13.1501 -5,-20 1.013801,-12.65241 5.915962,-26.13485 15,-35.00003 6.423385,-6.26863 16.024725,-10 25,-10 8.975275,0 18.576615,3.73137 25,10 9.084038,8.86518 13.986199,22.34762 15,35.00003 0.548861,6.8499 -5,20 -5,20 l 5,14.9999 c 0,0 -2.948904,3.8387 -5,5.0001 -5.97986,3.3857 -20,5 -20,5 l -5,-10 z"
+       id="path2987-1"
        inkscape:connector-curvature="0"
-       transform="translate(0,952.36218)"
-       sodipodi:nodetypes="zzzcczzzccz" />
+       sodipodi:nodetypes="cccacacccccaccaaaaaccaccc" />
   </g>
 </svg>

@@ -28,6 +28,14 @@ function Player(){
     this.battleReady = false;
     this.tick = 0;
     
+    this.armorHead = new ArmorPiece("HEAD armor", 3, armorTypes.HEAD, "heavyHelm1.svg");
+    this.armorArmLeft = new ArmorPiece("ARM armor", 2, armorTypes.ARM, "heavyArm1.svg");
+    this.armorTorso = new ArmorPiece("TORSO armor", 5, armorTypes.TORSO, "heavyTorso1.svg");
+    this.armorArmRight = new ArmorPiece("ARM armor", 2, armorTypes.ARM, "heavyArm1.svg");
+    this.armorLegs = new ArmorPiece("LEGS armor", 4, armorTypes.LEGS, "heavyLegs1.svg");
+    this.armorFootLeft = new ArmorPiece("FOOT armor", 1, armorTypes.FOOT, "heavyFoot1.svg");
+    this.armorFootRight = new ArmorPiece("FOOT armor", 1, armorTypes.FOOT, "heavyFoot1.svg");
+    
     /*
      * Method to set up any variables properly, sets up name from input right now
      */
@@ -59,14 +67,14 @@ function Player(){
         
         //this is for variables that are not being used currently
         //
-        //tempNo = Math.floor(Math.random()*statPoints);
-        //dex += Math.floor(tempNo);
-        //statPoints = statPoints - tempNo;
-        //tempNo = Math.floor(Math.random()*statPoints);
-        //wis += Math.floor(tempNo);
-        //statPoints = statPoints - tempNo;
-        //maxHealth = Math.floor(Math.random()*75+1);
-        //health = maxHealth;
+        tempNo = Math.floor(Math.random()*this.statPoints);
+        this.dex += Math.floor(tempNo);
+        this.statPoints = this.statPoints - tempNo;
+        tempNo = Math.floor(Math.random()*this.statPoints);
+        this.wis += Math.floor(tempNo);
+        this.statPoints = this.statPoints - tempNo;
+        this.maxHealth = Math.floor(Math.random()*75+1);
+        this.health = this.maxHealth;
         
         //checks to see if the ticker and stat points have not run out
         if(this.statPoints > 0 && this.ticker>0){
@@ -105,7 +113,7 @@ function Player(){
     Player.prototype.setExp = function(newExp){
         this.experience = newExp;
         //check for a level up
-        checkLevelUp();
+        this.checkLevelUp();
     };
         
     /*
@@ -134,32 +142,34 @@ function Player(){
         //add the exprience to the current experience
         this.experience += addExp;
         //check for a level up
-        checkLevelUp();
+        //this.checkLevelUp();
     };
     
     /*
      * Method to check for a level up
      */
-    function checkLevelUp(){
+    Player.prototype.checkLevelUp = function(){
         //log("Checking levelCap/exp: " + levelCap + " " + experience);
         //
         //while the experience is above the cap loop through this
         while(this.experience >= this.levelCap){
             log("----LEVEL UP----");
+            addCriticalInfo("darkpink", "***" + this.name + " levelled up!***");
+            playSound("levelup.wav");
             //increment the  level
             this.level += 1;
             //level up the stats
-            levelUpStats();
+            this.levelUpStats();
             //unlock the next skill, if applicable
             //unlockNextSkill();
             //remove the current level cap from the experience pool
             this.experience -= this.levelCap;
             //ramp up the level cap
-            this.levelCap += Math.ceil(levelCap*0.5);
+            this.levelCap += Math.ceil(this.levelCap*0.5);
             //increment the enemy level, to keep up a challenge
             //enemyLevel += 1;
             //print the player's stats
-            player.printStats();
+            //player.printStats();
         }
     };
     
@@ -200,17 +210,17 @@ function Player(){
     /*
      * Method to level up the stats
      */
-    function levelUpStats(){
+    Player.prototype.levelUpStats = function(){
         //increment maximum health by 10% of current maximum health
-        this.maxHealth += Math.floor(maxHealth*0.1);
+        this.maxHealth += Math.floor(this.maxHealth*0.1);
         //give full health
-        health = this.maxHealth;
+        this.health = this.maxHealth;
         //increment power by 20% of current power
-        this.pow += Math.floor(pow*0.2);
+        this.pow += Math.floor(this.pow*0.2);
         //increment dexterity by 20% of current dexterity
-        this.dex += Math.floor(dex*0.2);
+        this.dex += Math.floor(this.dex*0.2);
         //increment wisdom by 20% of current wisdom
-        this.wis += Math.floor(wis*0.2);
+        this.wis += Math.floor(this.wis*0.2);
     };
     
     /*
@@ -617,6 +627,23 @@ function Player(){
     };
     
     /*
+     * Kill the player
+     */
+    Player.prototype.setDead = function(){
+        addFlavorInfo("white", "You have died. Game over.");
+        tellFlavorInfo();
+        //alert("");
+        this.dead = true;
+    };
+    
+    /*
+     * Kill the player
+     */
+    Player.prototype.isDead = function(){
+        return this.dead;
+    };
+    
+    /*
      * Method to decrement the health
      */
     Player.prototype.decrementHealth = function(decrement){
@@ -627,7 +654,7 @@ function Player(){
                 //set health to 0
                 this.health = 0;
                 //set dead
-                this.dead = true;
+                this.setDead();
             }else{
                 //decrement health by 1
                 this.health--;
@@ -638,9 +665,10 @@ function Player(){
                 //set health to 0
                 this.health = 0;
                 //set dead
-                this.dead = true;
+                //this.dead = true;
+                this.setDead();
                 //show the end screen
-                showEndScreen();
+                //showEndScreen();
             }else{
                 //decrement health by the input
                 this.health = this.health - decrement;
@@ -656,7 +684,9 @@ function Player(){
         //
         //decrement the target's health by the power
         target.decrementHealth(this.pow);
-        addCombatText(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
+        if(!target.isDead()){
+            addCombatText(this.name + " attacked " + target.getName() + " for " + this.pow + " and left them with " + target.getHealth() + " health!");
+        }
         //set the player's action time to 0
         //battle.setActionTime(0);
         //}else{
@@ -800,6 +830,16 @@ function Player(){
     Player.prototype.getTick = function(){
         return this.tick;
     };   
+    
+    Player.prototype.getCombinedArmor = function(){
+        return (this.armorHead.getArmor()
+        + this.armorArmLeft.getArmor()
+        + this.armorTorso.getArmor()
+        + this.armorArmRight.getArmor()
+        + this.armorLegs.getArmor()
+        + this.armorFootLeft.getArmor()
+        + this.armorFootRight.getArmor());
+    };
     
     switch(arguments.length){
         //nothing
