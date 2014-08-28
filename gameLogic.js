@@ -90,26 +90,145 @@ function updatePhone(){
 /*
  * Update the phone screen with the inventory information
  */
-for(var i=0;i<50;i++){
-    var string = "";
-    for(var j=0;j<i;j++){
-        if(j<50){
-            string += "*";
-        }
-    }
-    if(i<50){
-        string += "Length" + i;
+//for(var i=0;i<50;i++){
+//    var string = "";
+//    for(var j=0;j<i;j++){
+//        if(j<50){
+//            string += "*";
+//        }
+//    }
+//    if(i<50){
+//        string += "Length" + i;
+//    }else{
+//        string += "Length" + "50";
+//    }
+//    
+//    for(var j=0;j<i;j++){
+//        if(j<50){
+//            string += "*";
+//        }
+//    }
+//    player.addItem(string);
+//}
+
+player.addItem(new Potion());
+player.addItem(new CrazyFish());
+player.addItem(new BabyCactus());
+player.addItem(new Glasses());
+player.addItem(new ValuableRing());
+
+var itemInfoWindow = $("#itemInfo");
+var showItemInfo = false;
+
+function docMouseMove(event){
+//    console.log("showiteminfo: " + showItemInfo);
+    if(showItemInfo){
+        itemInfoWindow.show();
     }else{
-        string += "Length" + "50";
+        itemInfoWindow.hide();
     }
-    
-    for(var j=0;j<i;j++){
-        if(j<50){
-            string += "*";
-        }
-    }
-    player.addItem(string);
 }
+
+function onOverItem(event){
+    showItemInfo = true;
+//    console.log("mouse move");
+    
+    var outputString = "";
+    var mousePos = [event.pageX, event.pageY];
+    var id = event.currentTarget.children[0].children[0].id;
+//    //console.log($(event.target).attr("class"));
+    if($(event.target).attr("class") === $(".item").attr("class")){
+//    
+//        //log("initial id: " + id);
+//
+        id = id.slice(5);
+//
+//        //log("cut id: " + id);
+//
+        id = parseInt(id);
+//
+        var item = player.getInventory()[id];
+//
+//        log("number id: " + id);
+//
+//        //log("item hover");
+//
+//
+        outputString += "<div id=\"itemInfo\""
+                        + "class=\"itemInfo\""
+                        + "style=\""
+                        + "top: " + ( mousePos[1]) + ";"
+                        + "left: " + ( mousePos[0]) + ";"
+                        + "height: 20%;"
+                        + "width: 20%;"
+                        + "border: 1px solid #303030;"
+                        + "position: absolute;"
+                        + "background-color: rgba(255,255,255,0.8);"
+                        + "color: #303030;"
+                        + "\""
+                        + ">"
+                    ;
+        //outputString += "This is the item info. <br>";
+        outputString += "-";
+        outputString += item.getName();
+        outputString += "-";
+        outputString += "<br>";
+        outputString += item.getDesc();
+        outputString += "<br>";
+        outputString += "Valued at: ";
+        outputString += item.getValue();
+        outputString += " gold pieces.";
+        outputString += "</div>";
+//
+//
+//        //outputString += "hullo";
+//
+//        //$("#itemInfo").remove();
+//        //console.log("replacing with " + outputString);
+        itemInfoWindow.html(outputString);
+//        itemInfoWindow.show();
+//        //itemInfoWindow = $("#itemInfo");
+    }
+//    
+//    
+//    //console.log($(event.target).attr("class"));
+//    if($(event.target).attr("id") === "itemInfo"){
+//        //console.log("Pizza");
+//        itemInfoWindow.show();
+//    }
+}
+
+var checkItemInfo;
+
+function docMouseOut(event){
+    
+}
+
+function onHoverItemOut(event){
+    showItemInfo = false;
+    //console.log(event.currentTarget.);
+//    if(event.currentTarget.class === "item"
+//            || event.currentTarget.class === "itemInfo"){
+    //$("#itemInfo").remove();
+    //console.log("mouse out");
+//    if(//$(event.target).attr("class") === $(".item").attr("class") ||    
+//             $(event.target).attr("class") === $("#itemInfo").attr("id")){
+//        //console.log("showing" + (event.target) + " " + $(event.target).attr("class") + " " + $("#itemInfo").attr("class"));
+//        //onOverItem(event);
+//        //itemInfoWindow.hide();
+//        clearInterval(checkItemInfo);
+//    }else{
+//        //itemInfoWindow.remove();
+//        if($(event.target).attr("class") === $("#itemInfo").attr("id")){
+//            checkItemInfo = setInterval(500, function(){onHoverItemExit();});
+//        }else{
+//            clearInterval(checkItemInfo);
+//            itemInfoWindow.hide();
+//            console.log("hiding " +  "because " + $(event.target).attr("class"));
+//        }
+//    }
+}
+
 function updateInventory(){
     var outputString = "";
     var outputStringBoxes = "";
@@ -130,11 +249,13 @@ function updateInventory(){
     //loop throuth player inventory, adding items to the lists (check boxes and text)
     for(var i=0;i<player.getInventory().length;i++){
 //        outputString += "<span style=\"width:100%;\"><u>" + player.getInventory()[i] +"</u></span>";//.getName();
-        outputString += "<div style=\"width:100%;border-bottom:1px solid #303030;\">";
+        outputString += "<div class=\"item\" style=\"width:100%;border-bottom:1px solid #303030;\">";
         outputString += "<div style=\"float:left;\"><input type=\"checkbox\" id=\"invid" + i + "\"";
-        outputString += "title=\"" + player.getInventory()[i] + "\"";
+        outputString += "title=\"" + player.getInventory()[i].getName() + "\"";
         outputString += "></div>";
-        outputString += "<div style=\"margin: 0 auto;\">" + player.getInventory()[i] +"</div></div>";//.getName();
+        //outputString += "<div style=\"margin: 0 auto;\">";
+        outputString += player.getInventory()[i].getName();
+        outputString += "</div>";//</div>";//.getName();
 //        outputStringBoxes += "<div style=\"width:100%;border-bottom:1px solid #303030;line-height:100%;\"><input type=\"checkbox\" id=\"invid" + i + "\"";
 //        outputStringBoxes += "title=\"" + player.getInventory()[i] + "\"";
 //        outputStringBoxes += "></div>";//<input type="checkbox" id="invid1" name="applepie"><br>
@@ -146,6 +267,15 @@ function updateInventory(){
     phoneScreen.html("<center>" + outputString + "</center>");
     
     
+    $(".item").mousemove(function(event){onOverItem(event);});
+    $(".item").mouseout(function(event){onHoverItemOut(event);});
+    
+    $(".itemInfo").mousemove(function(event){onOverItem(event);});
+    $(".itemInfo").mouseout(function(event){onHoverItemOut(event);});
+    
+    $(document).mousemove(function(event){docMouseMove(event);});
+    $(document).mouseout(function(event){docMouseOut(event);});
+        
     $("#inventoryItemList").css("overflow-x", "auto");
     $("#inventoryItemList").css("overflow-y", "scroll");
     $("#phone").css("overflow", "scroll");
