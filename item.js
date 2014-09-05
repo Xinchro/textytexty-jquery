@@ -6,8 +6,10 @@
 function Item(){
     
     this.name = "New Item";
-    this.value = 1;
+    this.value = -1;
     this.desc = "New Item Description";
+    this.img = 0;
+    this.defaultImage = "defaultItem.svg";
     
     Item.prototype.getName = function(){
         return this.name;
@@ -21,12 +23,23 @@ function Item(){
         return this.desc;
     };
     
+    Item.prototype.getImg  = function(){
+        if(typeof this.img !== "number"){
+            return this.img;
+        }else{
+            return this.defaultImage;
+        }
+    };
+    
     Item.prototype.effect = function(){
         //todo from outside
         return "New Item Effect";
     };
     
     switch(arguments.length){
+         //name, value, desc, img
+        case 4:
+            this.img = arguments[3];
          //name, value, desc
         case 3:
             this.desc = arguments[2];

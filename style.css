@@ -106,7 +106,7 @@ body{
 
 
 #gameButtons{
-    background-color: rgba(255,255,255,1);
+    background-color: rgba(48,48,48,1);
 /*    display: table;
     table-layout: auto;*/
     border: 0px solid white;
@@ -117,8 +117,8 @@ body{
 }
 
 .gameButton{
-/*    box-sizing: border-box;
-    border: 2px solid rgba(0,0,0,1);*/
+    box-sizing: border-box;
+    border: 2px solid rgba(48,48,48,1);
     background-color: rgba(255,255,255,1);  
     text-align: center;
     float: left;
@@ -133,7 +133,7 @@ body{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-image: url(button-background.svg);
+    //background-image: url(button-background.svg);
     line-height: 100%;
 }
 

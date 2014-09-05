@@ -116,6 +116,7 @@ player.addItem(new CrazyFish());
 player.addItem(new BabyCactus());
 player.addItem(new Glasses());
 player.addItem(new ValuableRing());
+player.addItem(new EvilBanana());
 
 var itemInfoWindow = $("#itemInfo");
 var showItemInfo = false;
@@ -123,10 +124,32 @@ var showItemInfo = false;
 function docMouseMove(event){
 //    console.log("showiteminfo: " + showItemInfo);
     if(showItemInfo){
+//        $("#itemInfo").css({"overflow-y": "scroll"});
+//        var textAreaWidth = $("#itemInfo")[0].scrollWidth;//area without scrollbar
+//        var areaWidth = $("#itemInfo").width();//area with scrollbar
+//        var newWidth = areaWidth + (areaWidth-textAreaWidth);
+//        //newWidth = newWidth/2;
+//        $("#itemInfo").css({"overflow-y": "hidden"});
+////        
+//        $("#itemInfoText").width(newWidth);
         itemInfoWindow.show();
     }else{
         itemInfoWindow.hide();
     }
+}
+
+function getWidthWithoutScroll(divEle, divEleParent){
+    scrollGoAwayParent.css({"overflow-y": "scroll"});
+    var textAreaWidth = scrollGoAwayParent[0].scrollWidth;//area without scrollbar
+    var areaWidth = scrollGoAwayParent.width();//area with scrollbar
+    var newWidth = areaWidth + (areaWidth-textAreaWidth);
+    //newWidth = newWidth/2;
+    divEleParent.css({"overflow-y": "hidden"});
+    
+    //$("#gameScreen").css({"overflow-y": "scroll"});
+    //$("#gameScreen").width(areaWidth + (areaWidth-textAreaWidth));
+    scollGoAway.css({width: newWidth});//, 1000, "", 
+    //return (newWidth);//, 1000, "", 
 }
 
 function onOverItem(event){
@@ -160,7 +183,7 @@ function onOverItem(event){
                         + "top: " + ( mousePos[1]) + ";"
                         + "left: " + ( mousePos[0]) + ";"
                         + "height: 20%;"
-                        + "width: 20%;"
+                        + "width: 40%;"
                         + "border: 1px solid #303030;"
                         + "position: absolute;"
                         + "background-color: rgba(255,255,255,0.8);"
@@ -169,6 +192,23 @@ function onOverItem(event){
                         + ">"
                     ;
         //outputString += "This is the item info. <br>";
+        
+        outputString += "<div style=\"float:left; width:20%; z-index:11;\">";
+        outputString += "<img ";
+        outputString += "src=\"" + item.getImg() + "\"";
+        outputString += "width=\"100%\"";
+//        outputString += "height=\"100%\"";
+        outputString += ">";
+        outputString += "</img>";
+        outputString += "</div>";
+        
+        outputString += "<div "
+                    +   "id=\"itemInfoText\""
+                     +  "style=\"float:left;"
+                     +  "width:80%;"
+                     +  "height:100%;"
+                     +  "overflow-y:scroll;"
+                     +  "\">";
         outputString += "-";
         outputString += item.getName();
         outputString += "-";
@@ -179,6 +219,8 @@ function onOverItem(event){
         outputString += item.getValue();
         outputString += " gold pieces.";
         outputString += "</div>";
+        
+        outputString += "</div>";
 //
 //
 //        //outputString += "hullo";
@@ -188,6 +230,18 @@ function onOverItem(event){
         itemInfoWindow.html(outputString);
 //        itemInfoWindow.show();
 //        //itemInfoWindow = $("#itemInfo");
+//        $("#itemInfo").css({"overflow-y": "scroll"});
+//        var textAreaWidth = $("#itemInfo")[0].scrollWidth;//area without scrollbar
+//        var areaWidth = $("#itemInfo").width();//area with scrollbar
+//        var newWidth = areaWidth + (areaWidth-textAreaWidth);
+//        //newWidth = newWidth/2;
+//        $("#itemInfo").css({"overflow-y": "hidden"});
+//        
+//        $("#itemInfo").width(newWidth);//itemInfoText
+
+          //scrollGoAway = $("#itemInfoText"); 
+        
+        
     }
 //    
 //    
@@ -196,6 +250,8 @@ function onOverItem(event){
 //        //console.log("Pizza");
 //        itemInfoWindow.show();
 //    }
+
+
 }
 
 var checkItemInfo;
@@ -882,28 +938,39 @@ function updateButtonText(){
 
     if(player.isBattleReady()){
         $("#buttonD").html("D<br>Attack");
+        $("#buttonD").css("background-color", "rgba(255,255,255,0.7)");
     }else if(player.isDead()){
         $("#buttonD").html("D<br>Replay");
+        $("#buttonD").css("background-color", "rgba(255,255,255,0.7)");
     }else{
         $("#buttonD").html("D");
+        $("#buttonD").css("background-color", "rgba(255,255,255,1)");
     }
     
     $("#buttonE").html("E"+"<br>"+"");
+    $("#buttonE").css("background-color", "rgba(255,255,255,1)");
     $("#buttonS").html("S"+"<br>"+"");
+    $("#buttonS").css("background-color", "rgba(255,255,255,1)");
     $("#buttonC").html("C"+"<br>"+"");
+    $("#buttonC").css("background-color", "rgba(255,255,255,1)");
     $("#buttonF").html("F"+"<br>"+"");
+    $("#buttonF").css("background-color", "rgba(255,255,255,1)");
     
     if(canMoveNorth){
         $("#buttonE").html("E"+"<br>"+"North");
+        $("#buttonE").css("background-color", "rgba(255,255,255,0.7)");
     }
     if(canMoveWest){
         $("#buttonS").html("S"+"<br>"+"West");
+        $("#buttonS").css("background-color", "rgba(255,255,255,0.7)");
     }
     if(canMoveSouth){
         $("#buttonC").html("C"+"<br>"+"South");
+        $("#buttonC").css("background-color", "rgba(255,255,255,0.7)");
     }
     if(canMoveEast){
         $("#buttonF").html("F"+"<br>"+"East");
+        $("#buttonF").css("background-color", "rgba(255,255,255,0.7)");
     }
 }
 

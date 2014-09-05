@@ -18,7 +18,7 @@ CrazyFish.prototype.constructor = CrazyFish;
 CrazyFish.prototype.effect = function(){};
 
 function BabyCactus(){
-    Item.call(this ,"Baby Cactus", 5, "A baby cactus, born of noble birth.");
+    Item.call(this ,"Baby Cactus", 5, "A baby cactus, born of noble birth. Cactus loves you.<br>(◕ε ◕｡ )", "cactus.svg");
 };
 BabyCactus.prototype = new Item;
 BabyCactus.prototype.constructor = BabyCactus;
@@ -37,3 +37,10 @@ function ValuableRing(){
 ValuableRing.prototype = new Item;
 ValuableRing.prototype.constructor = ValuableRing;
 ValuableRing.prototype.effect = function(){};
+
+function EvilBanana(){
+    Item.call(this ,"Evil Banana", 5, "This is your accomplice for stealing.", "evilBanana.svg");//todo desc
+};
+EvilBanana.prototype = new Item;
+EvilBanana.prototype.constructor = EvilBanana;
+EvilBanana.prototype.effect = function(){};

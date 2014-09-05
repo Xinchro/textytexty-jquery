@@ -55,6 +55,7 @@ log("textareaWidth: " + textAreaWidth);
 //log("inventoryAreaWidth: " + inventoryAreaWidth);
 
 $("#buttonE").html("E"+"<br>"+"North");
+$("#buttonE").css("background-color", "rgba(255,255,255,0.7)");
 
 
 function resizeButtons(){
