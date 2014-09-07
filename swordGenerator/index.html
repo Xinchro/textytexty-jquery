@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!-- 
+    Created on : 05-Sep-2014
+    Author     : Xinchro
+-->
+<html>
+    <head>
+        <title>Sword Generator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="http://old.xinchronize.com/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="swordGenStyle.css">
+        <script type="text/javascript" src="../js/libs/jquery/jquery.js"></script>
+        <script type="text/javascript" src="../equippableItemPart.js" defer></script>
+        <script type="text/javascript" src="../equippableItemPartList.js" defer></script>
+        <script type="text/javascript" src="../equippableItem.js" defer></script>
+        <script type="text/javascript" src="swordGen.js" defer></script>
+    </head>
+    <body>
+        <div id="genButton" onclick="javascript:genSwordButton()">Generate!</div>
+        <div id="genURL">Sword link: <input id="genURLinput" type="text" onClick="this.setSelectionRange(0, this.value.length)"></div>
+        <div id="swordLay1" class="layer"></div>
+        <div id="swordLay2" class="layer"></div>
+        <div id="swordLay3" class="layer"></div>
+        <div id="swordLay4" class="layer"></div>
+        <div id="swordStats">Stats</div>
+    </body>
+</html>

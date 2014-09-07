@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="kadoBlade.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5"
+     inkscape:cx="76.808712"
+     inkscape:cy="56.931606"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer5"
+     showgrid="true"
+     inkscape:window-width="1440"
+     inkscape:window-height="878"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Pommel"
+     style="display:none">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:50;stroke-opacity:1;stroke-dasharray:none"
+       d="m 90,15 5,-7 -2,1 -1,-2 0,2 -2,1 2,0 -1,3"
+       id="path3767"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Grip"
+     style="display:none">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4.5;stroke-opacity:1;stroke-dasharray:none"
+       d="m 74.999999,30 15,-15 -5,-5 -15,15 z"
+       id="path3763"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:connector-curvature="0"
+       id="path5245"
+       d="m 89,15 -5,-2 2,5 -5,-2 2,5 -5,-2 2,5 -5,-2 2,5 -5,-2"
+       style="fill:none;stroke:#303030;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4.5;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:connector-curvature="0"
+       id="path5245-8"
+       d="m 75,28 -2,-5 5,2 -2,-5 5,2 -2,-5 5,2 -2,-5 5,2 -2,-5"
+       style="fill:none;stroke:#303030;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4.5;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Guard"
+     style="display:none">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.5;stroke-opacity:1;stroke-dasharray:none"
+       d="m 70,25 0,0 c 0,0 -2,-2 -3,-3 -1,-1 -2,-2 -3,-3 -1.333333,-1.333333 -4,-4 -4,-4 -2,1 -4.911374,4.110783 -6,6 0,0 1.128958,1.639203 2,2 1.231839,0.510245 2.865799,-0.700975 4,0 1.268075,0.783714 1.128365,2.790672 2,4 0.826905,1.14727 3,3 3,3 l 6,6 c 0,0 3,7 -5,11 -1.356569,0.678284 1.622908,2.635581 3,2 13,-6 6,-19 6,-19 l 0,0 z"
+       id="path3761"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccaaccaaaccssccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Blade"
+     style="display:inline">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#303030;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:50;stroke-opacity:1;stroke-dasharray:none"
+       d="m 35,77 c 0,0 -1.155397,3.307446 -1,5 0.164117,1.787537 2,5 2,5 0,0 -3.562065,0.09378 -5,1 -1.410012,0.88862 -3,4 -3,4 0,0 -5.891815,-1.891815 -8,-4 -1.581139,-1.581139 -2.7032,-3.783717 -3,-6 -0.451206,-3.369268 0.663529,-6.874396 2,-10 1.599691,-3.741196 4.447637,-6.831247 7,-10 3.699317,-4.592693 7.657839,-9.009584 12,-13 2.798372,-2.571684 6,-5 9,-7 0.0129,-0.0086 4.156945,-0.154862 6,-1 2.366478,-1.085155 4.383615,-2.959148 6,-5 0.925539,-1.168589 2,-4 2,-4 2,-1 3.999999,-2 3.999999,-2 l 5,5 c 0,0 -17.048087,12.882698 -24.999999,20 -4.215081,3.772678 -8.518703,7.541237 -12,12 -2.392293,3.063992 -6,7 -6,10 3,1 8,0 8,0 z"
+       id="path3759"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cacacaaaaasaasccaacc" />
+  </g>
+</svg>

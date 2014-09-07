@@ -28,6 +28,8 @@ phone = $("phoneScreen");
 
 var armorTypes = Object.freeze({HEAD:0, ARM:1, TORSO:2, LEGS:3, FOOT:4});
 
+
+
 var debug = false;
 $("#log").hide(); //.css("display", "none");
 
