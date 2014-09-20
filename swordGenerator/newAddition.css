@@ -1,0 +1,84 @@
+/* 
+    Created on : 05-Sep-2014, 20:49:13
+    Author     : Xinchro
+*/
+
+body{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background-color: #afafaf;
+    font-family: monospace;
+}
+
+#genURL{
+    position: absolute;
+    top: 5%;
+    width: 30%;
+}    
+
+textarea {
+    resize: none;
+}
+    
+#submitBtn{
+    background-color: rgba(34,34,34,1);
+    color: rgba(255,255,255,1);
+    position: absolute;
+    height: 5%;
+    width: 10%;
+    cursor: pointer;
+    text-align: center;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#swordStats{
+    /*background-color: rgba(0,255,255,1);*/
+    box-sizing: border-box;
+    position: absolute;
+    height: 10%;
+    width: 30%;
+    top: 10%;
+    border: 1px #303030 solid;
+    overflow: scroll;
+}
+
+.layer{
+    position: absolute;
+    height: 70%;
+    width: 60%;
+    left: 30%;
+    top: 10%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+}
+
+#swordLay1{
+    /*background-color: rgba(0,255,0,1);*/
+    /*background-image: url("../swordBlade1.svg");*/
+}
+
+#swordLay2{
+    /*background-color: rgba(0,0,255,1);*/
+    /*background-image: url("../swordHilt1.svg");*/
+}
+
+#swordLay3{
+    /*background-color: rgba(255,255,0,1);*/
+    /*background-image: url("../swordGrip1.svg");*/
+}
+
+#swordLay4{
+    /*background-color: rgba(255,0,255,1);*/
+    /*background-image: url("../swordPommel1.svg");*/    
+}

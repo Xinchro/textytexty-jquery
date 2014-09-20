@@ -1,10 +1,10 @@
 /* 
     Created on : 05-Sep-2014
     Author     : Xinchro
-    Last update: 07-Sep-2014
+    Last update: 09-Sep-2014
 */
 
-//name, type, img, effect
+//name, desc, type, img, effect
 swordBlades = [];
 swordGuards = [];
 swordGrips = [];
@@ -241,3 +241,10 @@ console.log("Blade: " + swordBlades.length);
 console.log("Hilts: " + swordGuards.length);
 console.log("Grips: " + swordGrips.length);
 console.log("Pommels: " + swordPommels.length);
+
+console.log(JSON.stringify(swordBlades[0]));
+//console.log(JSON.stringify(swordGuards));
+//console.log(JSON.stringify(swordGrips));
+//console.log(JSON.stringify(swordPommels));
+//
+//console.log(JSON.stringify("" + (new swordBlades[0]).getName()));
