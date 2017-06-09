@@ -27,6 +27,7 @@ var phone;
 phone = $("phoneScreen");
 
 var armorTypes = Object.freeze({HEAD:0, ARM:1, TORSO:2, LEGS:3, FOOT:4});
+var nodeTypes = Object.freeze({WALL:0, ENEMY:1, AIR:2});
 
 
 

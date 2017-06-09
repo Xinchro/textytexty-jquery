@@ -61,19 +61,19 @@ body{
 }
 
 #inventoryButtonIcon{
-    background-image: url(inventoryIcon.svg);
+    background-image: url(InventoryIcon.svg);
 }
 #mapButtonIcon{
-    background-image: url(mapIcon.svg);
+    background-image: url(MapIcon.svg);
 }
 #statsButtonIcon{
-    background-image: url(statsIcon.svg);
+    background-image: url(StatsIcon.svg);
 }
 #socialButtonIcon{
-    background-image: url(socialIcon.svg);
+    background-image: url(SocialIcon.svg);
 }
 #aboutButtonIcon{
-    background-image: url(aboutIcon.svg);
+    background-image: url(AboutIcon.svg);
 }
 
 #phoneScreen{

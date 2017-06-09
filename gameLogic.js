@@ -8,7 +8,7 @@ var player = new Player("Player name");
 log("Player " + player.getName() + " spawned at " + player.getPos());
 //enemy.start("Enemy name", 0, 1);
 
-var map = new Map();
+//var map = new Map();
 
 var gameScreen = $("#gameScreen");
 gameScreen.append(player.getName() + ". Try moving North first.");
